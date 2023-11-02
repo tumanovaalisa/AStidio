@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AStidio</string>
+    <string name="personal">Профиль</string>
 </resources>
