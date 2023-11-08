@@ -12,7 +12,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/light_pink"
+        android:background="@color/light_purple"
         android:padding="10dp"/>
 
 </LinearLayout>
