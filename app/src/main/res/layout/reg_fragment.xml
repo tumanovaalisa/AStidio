@@ -15,7 +15,6 @@
             android:layout_marginBottom="30dp"
             android:src="@drawable/logo"
             android:layout_gravity="center"/>
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -23,7 +22,6 @@
             android:textColor="@color/purple"
             android:layout_gravity="center_horizontal"
             android:textSize="40dp"/>
-
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,7 +35,6 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:textColor="@color/purple"/>
-
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -47,13 +44,11 @@
             android:layout_margin="10dp"
             android:textColorHint="@color/purple"
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox">
-
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:textColor="@color/purple"/>
-
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -64,14 +59,12 @@
             app:endIconMode="password_toggle"
             android:textColorHint="@color/purple"
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox">
-
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/purple"
                 android:background="@color/white"
                 android:inputType="textPassword"/>
-
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -83,14 +76,12 @@
             app:endIconMode="password_toggle"
             android:textColorHint="@color/purple"
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox">
-
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/purple"
                 android:background="@color/white"
                 android:inputType="textPassword"/>
-
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
@@ -107,7 +98,6 @@
             android:id="@+id/done"
             android:onClick="getProfile"/>
 
-
         <com.google.android.material.button.MaterialButton
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
@@ -121,6 +111,5 @@
             android:id="@+id/back"
             android:onClick="goToSignIn">
         </com.google.android.material.button.MaterialButton>
-
     </LinearLayout>
 </LinearLayout>
