@@ -33,25 +33,19 @@
                     android:layout_marginTop="15dp"
                     android:layout_gravity="center"
                     android:src="@drawable/money"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:text="Ваш"
-                android:textAlignment="center"/>
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
                     android:textStyle="bold"
-                    android:text="баланс"
+                    android:text="Баланс"
                     android:textAlignment="center"/>
             <TextView
                 android:id="@+id/balance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="13sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 android:text="1500"
                 android:textAlignment="center"/>
