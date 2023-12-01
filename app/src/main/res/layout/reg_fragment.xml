@@ -34,7 +34,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:textColor="@color/purple"/>
+                android:textColor="@color/purple"
+                android:id="@+id/login_ET"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -48,7 +49,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:textColor="@color/purple"/>
+                android:textColor="@color/purple"
+                android:id="@+id/email_ET"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -64,24 +66,8 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/purple"
                 android:background="@color/white"
-                android:inputType="textPassword"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Повторите пароль"
-            android:layout_margin="10dp"
-            app:endIconMode="password_toggle"
-            android:textColorHint="@color/purple"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox">
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/purple"
-                android:background="@color/white"
-                android:inputType="textPassword"/>
+                android:inputType="textPassword"
+                android:id="@+id/password_ET"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
@@ -95,8 +81,7 @@
             android:textColor="@color/white"
             android:textSize="15dp"
             app:cornerRadius="30dp"
-            android:id="@+id/done"
-            android:onClick="getProfile"/>
+            android:id="@+id/done"/>
 
         <com.google.android.material.button.MaterialButton
             style="@style/Widget.MaterialComponents.Button.TextButton"
@@ -108,8 +93,7 @@
             android:textColor="@color/white"
             android:textSize="11dp"
             app:cornerRadius="30dp"
-            android:id="@+id/back"
-            android:onClick="goToSignIn">
+            android:id="@+id/back">
         </com.google.android.material.button.MaterialButton>
     </LinearLayout>
 </LinearLayout>

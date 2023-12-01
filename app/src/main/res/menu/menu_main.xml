@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_main"
+        android:icon="@drawable/home"
+        android:title="Главная" />
+
+    <item
+        android:id="@+id/navigation_timetable"
+        android:icon="@drawable/timetable"
+        android:title="Расписание" />
+
+    <item
+        android:id="@+id/navigation_teachers"
+        android:icon="@drawable/teacher"
+        android:title="Преподаватели" />
+
+    <item
+        android:id="@+id/navigation_shop"
+        android:icon="@drawable/shopping_cart"
+        android:title="Магазин" />
+
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/person"
+        android:title="Профиль" />
+</menu>

@@ -7,12 +7,12 @@
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:id="@+id/week_list"/>
+        android:id="@+id/week_list"
+        android:padding="10dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/light_purple"
         android:padding="10dp"/>
 
 </LinearLayout>
