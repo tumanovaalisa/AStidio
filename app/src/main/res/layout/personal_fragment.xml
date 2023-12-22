@@ -27,7 +27,7 @@
             android:src="@drawable/exit"
             android:onClick="exitFromProfile"
             android:layout_gravity="center"
-            android:layout_marginLeft="130dp"/>
+            android:layout_marginLeft="120dp"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -63,7 +63,7 @@
                     android:src="@drawable/more1"
                     android:onClick="exitFromProfile"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="80dp"/>
+                    android:layout_marginLeft="70dp"/>
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
@@ -101,7 +101,7 @@
                     android:src="@drawable/more1"
                     android:onClick="exitFromProfile"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="140dp"/>
+                    android:layout_marginLeft="130dp"/>
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
@@ -139,7 +139,7 @@
                     android:src="@drawable/more1"
                     android:onClick="exitFromProfile"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="135dp"/>
+                    android:layout_marginLeft="125dp"/>
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
@@ -177,7 +177,7 @@
                     android:src="@drawable/more1"
                     android:onClick="exitFromProfile"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="85dp"/>
+                    android:layout_marginLeft="75dp"/>
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
@@ -215,7 +215,7 @@
                     android:src="@drawable/more1"
                     android:onClick="exitFromProfile"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="165dp"/>
+                    android:layout_marginLeft="155dp"/>
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
