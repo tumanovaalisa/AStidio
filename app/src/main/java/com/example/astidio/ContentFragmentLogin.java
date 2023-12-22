@@ -92,7 +92,6 @@ public class ContentFragmentLogin extends Fragment {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        FirebaseUser user = mAuth.getCurrentUser();
                                         CurrentUser.email = emailText.getText().toString();
 
                                         CurrentUser.getUser(emailText.getText().toString(),
@@ -102,7 +101,7 @@ public class ContentFragmentLogin extends Fragment {
                                         startActivity(intent);
                                     } else {
                                         Log.w("TAG", "signInWithEmail:failure", task.getException());
-                                        Toast.makeText(getContext(), "Неверные данные",
+                                        Toast.makeText(getContext(), "Неверный логин или пароль!",
                                                 Toast.LENGTH_SHORT).show();
                                     }
                                 }

@@ -8,7 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 public class ShopFragment extends Fragment {
-    public ShopFragment(){super(R.layout.personal_fragment);}
+    public ShopFragment(){super(R.layout.shop_fragment);}
 
     public static ShopFragment newInstance(){
         return new ShopFragment();

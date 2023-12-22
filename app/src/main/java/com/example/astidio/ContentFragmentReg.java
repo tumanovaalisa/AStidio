@@ -1,5 +1,6 @@
 package com.example.astidio;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -66,9 +67,10 @@ public class ContentFragmentReg extends Fragment {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(getContext(), "Аккаунт успешно создан",
-                                                Toast.LENGTH_SHORT).show();
-
+                                        /*Toast.makeText(getContext(), "Аккаунт успешно создан",
+                                                Toast.LENGTH_SHORT).show();*/
+                                        Intent intent = new Intent(view.getContext(), MainActivity.class);
+                                        startActivity(intent);
                                         Map<String, Object> user1 = new HashMap<>();
                                         user1.put("Name", loginText.getText().toString());
                                         user1.put("Email", emailText.getText().toString());
