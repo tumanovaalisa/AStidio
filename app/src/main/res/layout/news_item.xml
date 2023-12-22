@@ -30,6 +30,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="text news"/>
+        android:text="text news"
+        android:layout_margin="10dp"/>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
