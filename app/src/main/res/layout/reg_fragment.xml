@@ -23,15 +23,16 @@
             android:layout_gravity="center_horizontal"
             android:textSize="40dp"/>
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:hint="Логин"
             android:layout_margin="10dp"
             android:textColorHint="@color/purple"
+            android:layout_gravity="center"
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:textColor="@color/purple"
@@ -39,14 +40,15 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:hint="Почта"
             android:layout_margin="10dp"
             android:textColorHint="@color/purple"
+            android:layout_gravity="center"
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox">
             <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:textColor="@color/purple"
@@ -54,15 +56,16 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:hint="Пароль"
             android:layout_margin="10dp"
             app:endIconMode="password_toggle"
             android:textColorHint="@color/purple"
+            android:layout_gravity="center"
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox">
             <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/purple"
                 android:background="@color/white"
