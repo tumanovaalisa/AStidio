@@ -1,14 +1,22 @@
 package com.example.astidio;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.shape.MaterialShapeDrawable;
+import com.google.android.material.shape.ShapeAppearanceModel;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -33,16 +41,13 @@ public class MainFragment extends Fragment {
         newsList = new ArrayList<>();
         newsAdapter = new NewsAdapter(getActivity(), newsList);
         recyclerView.setAdapter(newsAdapter);
-
-        // Убедитесь, что адаптер установлен перед вызовом loadNewsDataFromFirebase()
+        TextView textView = view.findViewById(R.id.name);
+        setUserName(textView);
         loadNewsDataFromFirebase();
     }
     private void loadNewsDataFromFirebase() {
-        // Инициализация Firestore
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        // Получение данных из коллекции "users"
-        db.collection("users")
+        db.collection("News")
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -58,9 +63,32 @@ public class MainFragment extends Fragment {
                         }
                         newsAdapter.notifyDataSetChanged();
                     } else {
-                        // Обработка ошибки
-                        // task.getException() содержит информацию об ошибке
+                        task.getException();
                     }
                 });
     }
+    private void setUserName(TextView textView) {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() != null) {
+            String Uid = auth.getCurrentUser().getUid();
+
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            db.collection("Users")
+                    .document(Uid)
+                    .get()
+                    .addOnSuccessListener(documentSnapshot -> {
+                        if (documentSnapshot.exists()) {
+                            String name = documentSnapshot.getString("Name");
+                            textView.setText("Привет, "+name+"!");
+                        } else {
+                            textView.setText("Привет!");
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        textView.setText("Error: " + e.getMessage());
+                    });
+        }
+    }
+
+
 }

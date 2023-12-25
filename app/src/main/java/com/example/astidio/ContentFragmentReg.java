@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -67,11 +68,13 @@ public class ContentFragmentReg extends Fragment {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        /*Toast.makeText(getContext(), "Аккаунт успешно создан",
-                                                Toast.LENGTH_SHORT).show();*/
                                         Intent intent = new Intent(view.getContext(), MainActivity.class);
                                         startActivity(intent);
+                                        FirebaseAuth auth = FirebaseAuth.getInstance();
+                                        FirebaseUser currentUser = auth.getCurrentUser();
+                                        String uid = currentUser.getUid();
                                         Map<String, Object> user1 = new HashMap<>();
+                                        user1.put("Uid", uid);
                                         user1.put("Name", loginText.getText().toString());
                                         user1.put("Email", emailText.getText().toString());
                                         user1.put("Role", "п");

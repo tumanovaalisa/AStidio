@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="RoundedTopCardView" parent="Widget.MaterialComponents.CardView">
+        <item name="shapeAppearance">@style/RoundedTopShapeAppearance</item>
+    </style>
+
+    <style name="RoundedTopShapeAppearance">
+        <item name="cornerSizeTopLeft">25dp</item>
+        <item name="cornerSizeTopRight">25dp</item>
+    </style>
+
+
+</resources>

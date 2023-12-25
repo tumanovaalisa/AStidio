@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder> {
@@ -39,9 +41,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
         // Устанавливаем данные в элементы интерфейса
         holder.nameTextView.setText(news.getTitle());
-        holder.pictureImageView.setImageResource(R.drawable.ic_launcher_foreground); // Замените на ваш способ загрузки изображения
+        Glide.with(context)
+                .load(news.getImageUrl()) // Замените на ваш путь к изображению
+                .into(holder.pictureImageView);// Замените на ваш способ загрузки изображения
+        holder.buttonTextView.setText(news.getDescription());
 
-        // Здесь можно установить другие данные, такие как текст кнопки и т. д.
     }
 
     // Возвращает количество элементов в списке
