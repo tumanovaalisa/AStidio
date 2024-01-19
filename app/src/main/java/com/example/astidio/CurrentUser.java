@@ -1,11 +1,14 @@
 package com.example.astidio;
 
+import java.util.Map;
+
 public class CurrentUser {
     static int id;
     static String email;
     static String name;
     static String password;
     static String role;
+    static Map<Product, Integer> order;
 
 
     public static void initialization() {

@@ -15,7 +15,7 @@
         android:fontFamily="sans-serif-black"
         android:textSize="36dp"
         android:gravity="center"
-        android:layout_marginBottom="50dp"/>
+        android:layout_marginBottom="40dp"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -27,6 +27,7 @@
         tools:ignore="MissingConstraints">
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
+            android:id="@+id/name_ET"
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:textColor="@color/purple"/>
@@ -43,6 +44,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/desc_ET"
             android:background="@color/white"
             android:textColor="@color/purple"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -58,6 +60,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/price_ET"
             android:background="@color/white"
             android:textColor="@color/purple"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -73,20 +76,42 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/sale_ET"
             android:background="@color/white"
             android:textColor="@color/purple"/>
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.button.MaterialButton
-        style="@style/Widget.MaterialComponents.Button"
-        android:layout_width="150dp"
-        android:layout_height="60dp"
-        android:text="добавить фото"
-        android:backgroundTint="@color/purple"
-        android:textColor="@color/white"
-        android:textSize="12dp"
-        app:cornerRadius="30dp"
-        android:layout_marginLeft="10dp"/>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Фото"
+        android:layout_margin="10dp"
+        android:textColorHint="@color/purple"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        tools:ignore="MissingConstraints">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/photo_ET"
+            android:background="@color/white"
+            android:textColor="@color/purple"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Количество на складе"
+        android:layout_margin="10dp"
+        android:textColorHint="@color/purple"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        tools:ignore="MissingConstraints">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/amount_ET"
+            android:background="@color/white"
+            android:textColor="@color/purple"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
         style="@style/Widget.MaterialComponents.Button"
@@ -97,5 +122,18 @@
         android:textColor="@color/white"
         android:textSize="12dp"
         app:cornerRadius="30dp"
-        android:layout_marginTop="185dp"/>
+        android:layout_marginTop="30dp"
+        android:onClick="newProduct"/>
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="назад"
+        android:backgroundTint="@color/purple"
+        android:textColor="@color/white"
+        android:textSize="12dp"
+        app:cornerRadius="30dp"
+        android:layout_marginTop="15dp"
+        android:onClick="toAdmin"/>
 </LinearLayout>

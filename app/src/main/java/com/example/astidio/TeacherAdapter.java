@@ -7,9 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import androidx.cardview.widget.CardView;
-
 import java.util.List;
 
 public class TeacherAdapter extends BaseAdapter {

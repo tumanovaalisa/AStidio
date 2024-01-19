@@ -8,22 +8,16 @@ import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentContainerView;
-import androidx.fragment.app.FragmentTransaction;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,6 +40,7 @@ public class ContentFragmentLogin extends Fragment {
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         Intent intent = new Intent(getContext(), MainActivity.class);
+        Intent intent2 = new Intent(getContext(), AdminActivity.class);
 
         db.collection("Users")
                 .get()
@@ -98,7 +93,8 @@ public class ContentFragmentLogin extends Fragment {
                                                 usersInfo.get(emailText.getText().toString()).get(1),
                                                 usersInfo.get(emailText.getText().toString()).get(0));
 
-                                        startActivity(intent);
+                                        if (CurrentUser.role.equals("а")) startActivity(intent2);
+                                        else startActivity(intent);
                                     } else {
                                         Log.w("TAG", "signInWithEmail:failure", task.getException());
                                         Toast.makeText(getContext(), "Неверный логин или пароль!",

@@ -25,6 +25,14 @@
             android:name=".MainActivity"
             android:exported="false">
         </activity>
+        <activity
+            android:name=".AdminActivity"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".AddActivity"
+            android:exported="false">
+        </activity>
     </application>
 
 </manifest>
