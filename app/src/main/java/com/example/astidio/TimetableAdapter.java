@@ -5,14 +5,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-public class TimetableAdapter extends BaseAdapter {
+public class TimetableAdapter extends RecyclerView.Adapter<TimetableAdapter.TimetableViewHolder> {
     private List<Timetable> timetableList;
     private Context context;
 
@@ -22,59 +27,70 @@ public class TimetableAdapter extends BaseAdapter {
     }
 
     @Override
-    public int getCount() {
-        return timetableList.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return timetableList.get(position);
-    }
-
-    @Override
     public long getItemId(int position) {
         return position;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-
-        if (convertView == null) {
-            // Inflate the layout for each list item
-            convertView = LayoutInflater.from(context).inflate(R.layout.timetable_item, parent, false);
-
-            // Create a ViewHolder to hold references to your views
-            holder = new ViewHolder();
-            holder.danceNameTextView = convertView.findViewById(R.id.dance_TV);
-            holder.timeInfoTextView = convertView.findViewById(R.id.time_TV);
-            holder.teacherImageView = convertView.findViewById(R.id.img_teacher);
-            holder.teacherNameTextView = convertView.findViewById(R.id.name_TV);
-            holder.availableSeatsTextView = convertView.findViewById(R.id.seats);
-
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-
-        // Get the current timetable entry
-        Timetable timetable = timetableList.get(position);
-
-        // Set data to your views
-        holder.danceNameTextView.setText(timetable.getDanceName());
-        holder.timeInfoTextView.setText(timetable.getTimeInfo());
-        holder.teacherImageView.setImageResource(timetable.getTeacherImageResId());
-        holder.teacherNameTextView.setText(timetable.getTeacherName());
-        holder.availableSeatsTextView.setText(String.valueOf(timetable.getAvailableSeats()));
-
-        return convertView;
+    public int getItemCount() {
+        return timetableList.size();
     }
 
-    private static class ViewHolder {
+    @NonNull
+    @Override
+    public TimetableAdapter.TimetableViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.timetable_item, parent, false);
+        return new TimetableAdapter.TimetableViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull TimetableAdapter.TimetableViewHolder holder, int position) {
+        // Get the current timetable entry
+        Timetable timetable = timetableList.get(position);
+        // Set data to your views
+        holder.danceNameTextView.setText(timetable.getDanceName());
+        String time = timetable.getTimeStart() + " - " + timetable.getTimeEnd() + " ~ " + timetable.getDate();
+        holder.timeInfoTextView.setText(time);
+        Glide.with(context)
+                .load(timetable.getTeacherImageResId()) // Замените на ваш путь к изображению
+                .into(holder.teacherImageView);// Замените на ваш способ загрузки изображения
+        holder.teacherNameTextView.setText(timetable.getTeacherName());
+        holder.availableSeatsTextView.setText(String.valueOf(timetable.getAvailableSeats()));
+        // Обработка события кнопки enrol
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int adapterPosition = holder.getAdapterPosition();
+                if (enrolButtonClickListener != null && adapterPosition != RecyclerView.NO_POSITION) {
+                    enrolButtonClickListener.onItemClick(adapterPosition);
+                }
+            }
+        });
+    }
+    private TimetableAdapter.OnItemClickListener enrolButtonClickListener;
+    public void setOnEnrolButtonClickListener(TimetableAdapter.OnItemClickListener listener) {
+        this.enrolButtonClickListener = listener;
+    }
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public static class TimetableViewHolder extends RecyclerView.ViewHolder{
         TextView danceNameTextView;
         TextView timeInfoTextView;
         ImageView teacherImageView;
         TextView teacherNameTextView;
         TextView availableSeatsTextView;
+        Button enrolButton;
+        public TimetableViewHolder(@NonNull View itemView) {
+            super(itemView);
+            danceNameTextView = itemView.findViewById(R.id.dance_TV);
+            timeInfoTextView = itemView.findViewById(R.id.time_TV);
+            teacherImageView = itemView.findViewById(R.id.img_teacher);
+            teacherNameTextView = itemView.findViewById(R.id.name_TV);
+            availableSeatsTextView = itemView.findViewById(R.id.seats);
+            enrolButton = itemView.findViewById(R.id.enrol);
+        }
     }
+
 }

@@ -58,7 +58,7 @@ public class TeacherAdapter extends BaseAdapter {
         Teacher teacher = teacherList.get(position);
 
         // Set data to your views
-        holder.imageView.setImageResource(teacher.getImageResId());
+        //holder.imageView.setImageResource(teacher.getImageResId());
         holder.nameTextView.setText(teacher.getName());
         holder.danceTypeTextView.setText(teacher.getDanceType());
 
