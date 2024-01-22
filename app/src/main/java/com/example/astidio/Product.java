@@ -1,70 +1,102 @@
 package com.example.astidio;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.Map;
+
 public class Product {
-    private int imageResId;
-    private String name;
-    private double price;
-    private String description;
-    private int sale;
-    private int amount;
+    private String idProduct;
+    private String imgProduct;
+    private String nameProduct;
+    private double priceProduct;
+    private String descriptionProduct;
+    private int saleProduct;
+    private int amountProduct;
 
-    public Product(int imageResId, String name, double price, String description, int sale, int amount) {
-        this.imageResId = imageResId;
-        this.name = name;
-        this.price = price;
-        this.description = description;
-        this.sale = sale;
-        this.amount = amount;
+    public Product() {
+        this.idProduct = "";
+        this.nameProduct = "";
+        this.descriptionProduct = "";
+        this.saleProduct = 0;
+        this.amountProduct = 0;
+        this.priceProduct = 0;
+        this.imgProduct = "";
     }
 
-    public int getImageResId() {
-        return imageResId;
+    public Product(String idProduct, String imageResId, String name, double price,
+                     String description, int sale, int amount) {
+        this.idProduct = idProduct;
+        this.imgProduct = imageResId;
+        this.nameProduct = name;
+        this.priceProduct = price;
+        this.descriptionProduct = description;
+        this.saleProduct = sale;
+        this.amountProduct = amount;
     }
 
-    public void setImageResId(int imageResId) {
-        this.imageResId = imageResId;
+    public String getIdProduct() {
+        return idProduct;
     }
 
-    public String getName() {
-        return name;
+    public void setIdProduct(String idProduct) {
+        this.idProduct = idProduct;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getImgProduct() {
+        return imgProduct;
     }
 
-    public double getPrice() {
-        return price;
+    public void setImgProduct(String imgProduct) {
+        
+        this.imgProduct = imgProduct;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public String getNameProduct() {
+        return nameProduct;
     }
 
-    public String getDescription() {
-        return description;
+    public void setNameProduct(String nameProduct) {
+        this.nameProduct = nameProduct;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public double getPriceProduct() {
+        return priceProduct;
     }
 
-    public int getSale() {
-        return sale;
+    public void setPriceProduct(double priceProduct) {
+        this.priceProduct = priceProduct;
     }
 
-    public void setSale(int sale) {
-        this.sale = sale;
+    public String getDescriptionProduct() {
+        return descriptionProduct;
     }
 
-    public int getAmount() {
-        return amount;
+    public void setDescriptionProduct(String descriptionProduct) {
+        
+        this.descriptionProduct = descriptionProduct;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
+    public int getSaleProduct() {
+        return saleProduct;
     }
 
+    public void setSaleProduct(int saleProduct) {
+        this.saleProduct = saleProduct;
+    }
 
+    public int getAmountProduct() {
+        return amountProduct;
+    }
+
+    public void setAmountProduct(int amountProduct) {
+        this.amountProduct = amountProduct;
+    }
 
 }

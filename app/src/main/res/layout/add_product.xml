@@ -19,7 +19,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
         android:hint="Название"
         android:layout_margin="10dp"
         android:textColorHint="@color/purple"
@@ -35,7 +35,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
         android:hint="Описание"
         android:layout_margin="10dp"
         android:textColorHint="@color/purple"
@@ -51,7 +51,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
         android:hint="Цена"
         android:layout_margin="10dp"
         android:textColorHint="@color/purple"
@@ -67,7 +67,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
         android:hint="Скидка"
         android:layout_margin="10dp"
         android:textColorHint="@color/purple"
@@ -83,7 +83,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
         android:hint="Фото"
         android:layout_margin="10dp"
         android:textColorHint="@color/purple"
@@ -99,7 +99,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
         android:hint="Количество на складе"
         android:layout_margin="10dp"
         android:textColorHint="@color/purple"

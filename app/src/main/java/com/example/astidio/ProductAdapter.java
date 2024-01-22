@@ -8,9 +8,35 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
-public class ProductAdapter extends BaseAdapter {
+public class ProductAdapter extends
+        RecyclerView.Adapter<ProductAdapter.ViewHolder> {
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView imageView;
+        TextView nameTextView;
+        TextView priceTextView;
+        Button addButton;
+        TextView amountTextView;
+        Button deleteButton;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+
+            imageView = (ImageView) itemView.findViewById(R.id.image);
+            nameTextView = (TextView) itemView.findViewById(R.id.name);
+            priceTextView = (TextView) itemView.findViewById(R.id.price);
+            amountTextView = (TextView) itemView.findViewById(R.id.amount);
+        }
+    }
+
     private List<Product> productList;
     private Context context;
 
@@ -20,56 +46,42 @@ public class ProductAdapter extends BaseAdapter {
     }
 
     @Override
-    public int getCount() {
-        return productList.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return productList.get(position);
-    }
-
-    @Override
     public long getItemId(int position) {
         return position;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
+    public int getItemCount() {
+        return productList.size();
+    }
 
-        if (convertView == null) {
-            // Inflate the layout for each list item
-            convertView = LayoutInflater.from(context).inflate(R.layout.product_item, parent, false);
+    @NonNull
+    @Override
+    public ProductAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Context context = parent.getContext();
+        LayoutInflater inflater = LayoutInflater.from(context);
 
-            // Create a ViewHolder to hold references to your views
-            holder = new ViewHolder();
-            holder.imageView = convertView.findViewById(R.id.image);
-            holder.nameTextView = convertView.findViewById(R.id.name);
-            holder.priceTextView = convertView.findViewById(R.id.price);
-            holder.addButton = convertView.findViewById(R.id.add_button);
-            holder.amountTextView = convertView.findViewById(R.id.amount);
-            holder.deleteButton = convertView.findViewById(R.id.delete_button);
+        View contactView = inflater.inflate(R.layout.product_item, parent, false);
 
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
+        ViewHolder viewHolder = new ProductAdapter.ViewHolder(contactView);
+        return viewHolder;
+    }
 
-        // Get the current product
+    @Override
+    public void onBindViewHolder(@NonNull ProductAdapter.ViewHolder holder, int position) {
         Product product = productList.get(position);
-
         // Set data to your views
-        holder.imageView.setImageResource(product.getImageResId());
-        holder.nameTextView.setText(product.getName());
-        holder.priceTextView.setText(String.valueOf(product.getPrice()));
-        holder.amountTextView.setText(String.valueOf(product.getAmount()));
-
+        Glide.with(context)
+                .load(product.getImgProduct()) // Замените на ваш путь к изображению
+                .into(holder.imageView);// Замените на ваш способ загрузки изображения
+        holder.nameTextView.setText(product.getNameProduct());
+        double finalPrice = (product.getPriceProduct() * (100 - product.getSaleProduct()))/100;
+        holder.priceTextView.setText(String.valueOf(finalPrice) + " руб.");
+        holder.amountTextView.setText(String.valueOf(product.getAmountProduct()));
         // Set click listeners for buttons (you can use onClick attribute in XML instead)
         holder.addButton.setOnClickListener(v -> addOne(position));
         holder.deleteButton.setOnClickListener(v -> deleteOne(position));
 
-        return convertView;
     }
 
     private void addOne(int position) {
@@ -78,14 +90,5 @@ public class ProductAdapter extends BaseAdapter {
 
     private void deleteOne(int position) {
 
-    }
-
-    private static class ViewHolder {
-        ImageView imageView;
-        TextView nameTextView;
-        TextView priceTextView;
-        Button addButton;
-        TextView amountTextView;
-        Button deleteButton;
     }
 }
