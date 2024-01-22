@@ -13,18 +13,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-
 import java.util.List;
 
-public class ProductAdapter extends
-        RecyclerView.Adapter<ProductAdapter.ViewHolder> {
+public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
+    private Context context;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         TextView nameTextView;
         TextView priceTextView;
-        Button addButton;
+        TextView descTextView;
         TextView amountTextView;
+        Button addButton;
         Button deleteButton;
 
         public ViewHolder(View itemView) {
@@ -33,29 +33,20 @@ public class ProductAdapter extends
             imageView = (ImageView) itemView.findViewById(R.id.image);
             nameTextView = (TextView) itemView.findViewById(R.id.name);
             priceTextView = (TextView) itemView.findViewById(R.id.price);
+            descTextView = (TextView) itemView.findViewById(R.id.description);
             amountTextView = (TextView) itemView.findViewById(R.id.amount);
+            addButton = (Button) itemView.findViewById(R.id.add_button);
+            deleteButton = (Button) itemView.findViewById(R.id.delete_button);
         }
     }
 
-    private List<Product> productList;
-    private Context context;
+    private List<Product> mProductList;
 
     public ProductAdapter(Context context, List<Product> productList) {
         this.context = context;
-        this.productList = productList;
+        mProductList = productList;
     }
 
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public int getItemCount() {
-        return productList.size();
-    }
-
-    @NonNull
     @Override
     public ProductAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
@@ -69,19 +60,29 @@ public class ProductAdapter extends
 
     @Override
     public void onBindViewHolder(@NonNull ProductAdapter.ViewHolder holder, int position) {
-        Product product = productList.get(position);
-        // Set data to your views
+        Product product = mProductList.get(position);
+        TextView textView1 = holder.nameTextView;
+        textView1.setText(product.getNameProduct());
+        double finalPrice = (product.getPriceProduct() * (100 - product.getSaleProduct()))/100;
+        TextView textView2 = holder.priceTextView;
+        textView2.setText(String.valueOf(finalPrice) + " руб.");
+        ImageView imageView = holder.imageView;
         Glide.with(context)
                 .load(product.getImgProduct()) // Замените на ваш путь к изображению
-                .into(holder.imageView);// Замените на ваш способ загрузки изображения
-        holder.nameTextView.setText(product.getNameProduct());
-        double finalPrice = (product.getPriceProduct() * (100 - product.getSaleProduct()))/100;
-        holder.priceTextView.setText(String.valueOf(finalPrice) + " руб.");
-        holder.amountTextView.setText(String.valueOf(product.getAmountProduct()));
-        // Set click listeners for buttons (you can use onClick attribute in XML instead)
-        holder.addButton.setOnClickListener(v -> addOne(position));
-        holder.deleteButton.setOnClickListener(v -> deleteOne(position));
+                .into(imageView);// Замените на ваш способ загрузки изображения
+        TextView textView3 = holder.amountTextView;
+        textView3.setText("В наличии: " + String.valueOf(product.getAmountProduct()));
+        TextView textView4 = holder.descTextView;
+        textView4.setText(product.getDescriptionProduct());
+        Button button1 = holder.addButton;
+        Button button2 = holder.deleteButton;
+        button1.setOnClickListener(v -> addOne(position));
+        button2.setOnClickListener(v -> deleteOne(position));
+    }
 
+    @Override
+    public int getItemCount() {
+        return mProductList.size();
     }
 
     private void addOne(int position) {
