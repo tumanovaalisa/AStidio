@@ -1,13 +1,11 @@
 package com.example.astidio;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,23 +16,21 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
-public class ShopFragment extends Fragment {
+public class AdminActivity extends AppCompatActivity {
+
     private FirebaseFirestore db;
     RecyclerView recyclerView;
 
-    public ShopFragment(){super(R.layout.shop_fragment);}
-
-    public static ShopFragment newInstance(){
-        return new ShopFragment();
-    }
-
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.admin_shop);
+
         db = FirebaseFirestore.getInstance();
-        recyclerView = (RecyclerView) view.findViewById(R.id.items);
+        recyclerView = (RecyclerView) findViewById(R.id.shop_redact);
 
         ArrayList<Product> products = new ArrayList<>();
         db.collection("Products")
@@ -57,12 +53,16 @@ public class ShopFragment extends Fragment {
                                 }
                                 products.add(product);
                             }
-                            ProductAdapter adapter = new ProductAdapter(getContext(), products);
+                            AdminAdapter adapter = new AdminAdapter(getApplicationContext(), products);
                             recyclerView.setAdapter(adapter);
-                            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                            recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                         }
                     }
                 });
-    }
+        }
 
+    public void addProduct(View view) {
+        Intent intent = new Intent(this, AddActivity.class);
+        startActivity(intent);
+    }
 }
