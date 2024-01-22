@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center">
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="15dp">
@@ -19,7 +19,7 @@
                 android:layout_height="wrap_content"
                 android:text="Название направления"
                 android:fontFamily="sans-serif-black"
-                android:textSize="16dp"
+                android:textSize="20dp"
                 android:textColor="@color/names"
                 android:id="@+id/dance_TV"/>
             <TextView
@@ -73,15 +73,15 @@
             </androidx.cardview.widget.CardView>
             <com.google.android.material.button.MaterialButton
                 style="@style/Widget.MaterialComponents.Button"
-                android:layout_width="120dp"
+                android:layout_width="wrap_content"
                 android:layout_height="45dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
-                android:text="Я приду!"
+                android:text="Иду!"
+                app:cornerRadius="12dp"
                 android:backgroundTint="@color/purple"
                 android:textColor="@color/white"
                 android:textSize="15dp"
-                app:cornerRadius="30dp"
                 android:id="@+id/enrol"
                 app:strokeColor="@color/white"/>
             

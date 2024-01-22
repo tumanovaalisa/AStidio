@@ -2,6 +2,7 @@ package com.example.astidio;
 
 public class Timetable {
     private String danceName;
+    private String id;
     private String timeStart;
     private String timeEnd;
     private String date;
@@ -9,8 +10,9 @@ public class Timetable {
     private String teacherName;
     private int availableSeats;
 
-    public Timetable(String date, String danceName, String timeStart,String timeEnd, String teacherImageResId, String teacherName, int availableSeats) {
+    public Timetable(String id, String date, String danceName, String timeStart,String timeEnd, String teacherImageResId, String teacherName, int availableSeats) {
         this.danceName = danceName;
+        this.id = id;
         this.date = date;
         this.timeEnd = timeEnd;
         this.timeStart = timeStart;
@@ -60,5 +62,13 @@ public class Timetable {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

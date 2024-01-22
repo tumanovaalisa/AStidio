@@ -57,7 +57,7 @@ public class TimetableAdapter extends RecyclerView.Adapter<TimetableAdapter.Time
         holder.teacherNameTextView.setText(timetable.getTeacherName());
         holder.availableSeatsTextView.setText(String.valueOf(timetable.getAvailableSeats()));
         // Обработка события кнопки enrol
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.enrolButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int adapterPosition = holder.getAdapterPosition();
