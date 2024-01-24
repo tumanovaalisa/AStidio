@@ -51,6 +51,7 @@ public class ContentFragmentLogin extends Fragment {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 List<String> info = new ArrayList<>();
                                 String keyEmail = "";
+                                info.add(document.getId().toString());
                                 for(Map.Entry<String,Object> docs : document.getData().entrySet()){
                                     if (docs.getKey().equals("Email")) keyEmail = docs.getValue().toString();
                                     if (docs.getKey().equals("Name")) info.add(docs.getValue().toString());
@@ -87,9 +88,11 @@ public class ContentFragmentLogin extends Fragment {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
+                                        CurrentUser.initialization();
                                         CurrentUser.email = emailText.getText().toString();
 
                                         CurrentUser.getUser(emailText.getText().toString(),
+                                                usersInfo.get(emailText.getText().toString()).get(2),
                                                 usersInfo.get(emailText.getText().toString()).get(1),
                                                 usersInfo.get(emailText.getText().toString()).get(0));
 

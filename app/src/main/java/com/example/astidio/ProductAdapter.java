@@ -7,9 +7,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -24,6 +26,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         TextView priceTextView;
         TextView descTextView;
         TextView amountTextView;
+        TextView nTextView;
+        LinearLayout linearLayout;
         Button addButton;
         Button deleteButton;
 
@@ -35,6 +39,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             priceTextView = (TextView) itemView.findViewById(R.id.price);
             descTextView = (TextView) itemView.findViewById(R.id.description);
             amountTextView = (TextView) itemView.findViewById(R.id.amount);
+            nTextView = (TextView) itemView.findViewById(R.id.n);
+            linearLayout = itemView.findViewById(R.id.main);
             addButton = (Button) itemView.findViewById(R.id.add_button);
             deleteButton = (Button) itemView.findViewById(R.id.delete_button);
         }
@@ -72,24 +78,51 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 .into(imageView);// Замените на ваш способ загрузки изображения
         TextView textView3 = holder.amountTextView;
         textView3.setText("В наличии: " + String.valueOf(product.getAmountProduct()));
+        if (product.getAmountProduct() == 0) holder.addButton.setEnabled(false);
         TextView textView4 = holder.descTextView;
         textView4.setText(product.getDescriptionProduct());
-        Button button1 = holder.addButton;
-        Button button2 = holder.deleteButton;
-        button1.setOnClickListener(v -> addOne(position));
-        button2.setOnClickListener(v -> deleteOne(position));
+        TextView textView5 = holder.nTextView;
+        if (CurrentUser.order.containsKey(product)){
+            textView5.setText(CurrentUser.order.get(product).toString());
+        }
+        else textView5.setText("0");
+
+        holder.deleteButton.setEnabled(false);
+
+        LinearLayout layout = holder.linearLayout;
+        holder.addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int n = Integer.parseInt(textView5.getText().toString());
+                n++;
+                CurrentUser.order.put(product, n);
+                textView5.setText(Integer.toString(n));
+                int bg = ContextCompat.getColor(context, R.color.light_pink);
+                layout.setBackgroundColor(bg);
+                if (n == product.getAmountProduct()) holder.addButton.setEnabled(false);
+                holder.deleteButton.setEnabled(true);
+            }
+        });
+        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int n = Integer.parseInt(textView5.getText().toString());
+                if (n > 1) n--;
+                else if (n == 1){
+                    CurrentUser.order.remove(product);
+                    n--;
+                    int bg = ContextCompat.getColor(context, R.color.white);
+                    layout.setBackgroundColor(bg);
+                    holder.deleteButton.setEnabled(false);
+                }
+                if (n < product.getAmountProduct()) holder.addButton.setEnabled(true);
+                textView5.setText(Integer.toString(n));
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return mProductList.size();
-    }
-
-    private void addOne(int position) {
-
-    }
-
-    private void deleteOne(int position) {
-
     }
 }

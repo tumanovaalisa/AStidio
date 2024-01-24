@@ -1,25 +1,29 @@
 package com.example.astidio;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class CurrentUser {
-    static int id;
+    static String id;
     static String email;
     static String name;
-    static String password;
     static String role;
     static Map<Product, Integer> order;
 
 
     public static void initialization() {
+        id = "";
         email = "";
         name = "";
-        password = "";
         role = "";
+        order = new HashMap<Product, Integer>();
     }
-    public static void getUser(String e, String n, String r) {
+    public static void getUser(String e, String n,
+                               String r, String i) {
+        id = i;
         email = e;
         name = n;
         role = r;
+
     }
 }
