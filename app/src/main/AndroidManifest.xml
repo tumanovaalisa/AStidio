@@ -33,6 +33,9 @@
             android:name=".AddActivity"
             android:exported="false">
         </activity>
+        <activity
+            android:name=".RedactActivity"
+            android:exported="false">
+        </activity>
     </application>
-
 </manifest>

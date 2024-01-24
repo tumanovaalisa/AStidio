@@ -34,7 +34,7 @@ import java.util.Map;
 public class ShopFragment extends Fragment {
     private FirebaseFirestore db;
     RecyclerView recyclerView;
-    Button getOrder;
+    static Button getOrder;
 
     public ShopFragment(){super(R.layout.shop_fragment);}
 

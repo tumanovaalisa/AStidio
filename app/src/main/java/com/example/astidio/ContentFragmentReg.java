@@ -52,6 +52,9 @@ public class ContentFragmentReg extends Fragment {
 
                 FrameLayout frameLayout2 = (FrameLayout) getActivity().getWindow().findViewById(R.id.fragment_container_view_login);
                 frameLayout2.setVisibility(View.VISIBLE);
+                loginText.setText("");
+                emailText.setText("");
+                passwText.setText("");
             }
         });
 

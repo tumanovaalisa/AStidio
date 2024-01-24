@@ -37,6 +37,7 @@ public class ContentFragmentLogin extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        CurrentUser.initialization();
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         Intent intent = new Intent(getContext(), MainActivity.class);
@@ -88,7 +89,6 @@ public class ContentFragmentLogin extends Fragment {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        CurrentUser.initialization();
                                         CurrentUser.email = emailText.getText().toString();
 
                                         CurrentUser.getUser(emailText.getText().toString(),
@@ -96,6 +96,8 @@ public class ContentFragmentLogin extends Fragment {
                                                 usersInfo.get(emailText.getText().toString()).get(1),
                                                 usersInfo.get(emailText.getText().toString()).get(0));
 
+                                        emailText.setText("");
+                                        passwText.setText("");
                                         if (CurrentUser.role.equals("а")) startActivity(intent2);
                                         else startActivity(intent);
                                     } else {

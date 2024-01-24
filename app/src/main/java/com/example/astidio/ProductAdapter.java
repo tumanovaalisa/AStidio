@@ -101,6 +101,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 layout.setBackgroundColor(bg);
                 if (n == product.getAmountProduct()) holder.addButton.setEnabled(false);
                 holder.deleteButton.setEnabled(true);
+                ShopFragment.getOrder.setVisibility(View.VISIBLE);
             }
         });
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -114,8 +115,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                     int bg = ContextCompat.getColor(context, R.color.white);
                     layout.setBackgroundColor(bg);
                     holder.deleteButton.setEnabled(false);
+
                 }
                 if (n < product.getAmountProduct()) holder.addButton.setEnabled(true);
+                if (CurrentUser.order.isEmpty()) ShopFragment.getOrder.setVisibility(View.INVISIBLE);
                 textView5.setText(Integer.toString(n));
             }
         });
