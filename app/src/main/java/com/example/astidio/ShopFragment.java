@@ -85,7 +85,7 @@ public class ShopFragment extends Fragment {
 
                                 orderUser.put("Date", "24.01.2024 17:25:00");
                                 orderUser.put("IdC", CurrentUser.id);
-                                orderUser.put("Price", Double.toString(price));
+                                orderUser.put("Price", price);
                                 orderUser.put("Products", map);
 
                                 db.collection("ShopOrders")

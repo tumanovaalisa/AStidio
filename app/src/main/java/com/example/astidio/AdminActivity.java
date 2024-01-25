@@ -65,4 +65,14 @@ public class AdminActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AddActivity.class);
         startActivity(intent);
     }
+
+    public void historyOrders(View view) {
+        Intent intent = new Intent(this, OrdersActivity.class);
+        startActivity(intent);
+    }
+
+    public void exitAdmin(View view) {
+        Intent intent = new Intent(this, EntryActivity.class);
+        startActivity(intent);
+    }
 }
