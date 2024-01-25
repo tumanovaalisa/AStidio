@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -23,7 +24,8 @@ import java.util.List;
 import java.util.Map;
 
 public class ProfileFragment extends Fragment {
-    ImageButton getHistory;
+
+    CardView cardView;
 
     public ProfileFragment(){super(R.layout.personal_fragment);}
 
@@ -34,9 +36,9 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getHistory = view.findViewById(R.id.getHistory_Btn);
+        cardView = view.findViewById(R.id.toHistory);
 
-        getHistory.setOnClickListener(new View.OnClickListener() {
+        cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), HistoryActivity.class);
