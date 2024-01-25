@@ -93,6 +93,9 @@ public class ContentFragmentReg extends Fragment {
                                                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                                     @Override
                                                     public void onSuccess(DocumentReference documentReference) {
+                                                        CurrentUser.name = user1.get("Name").toString();
+                                                        CurrentUser.email = user1.get("Email").toString();
+                                                        CurrentUser.id = documentReference.getId().toString();
                                                     }
                                                 })
                                                 .addOnFailureListener(new OnFailureListener() {

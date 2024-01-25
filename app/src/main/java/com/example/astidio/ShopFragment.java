@@ -93,6 +93,8 @@ public class ShopFragment extends Fragment {
                                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                             @Override
                                             public void onSuccess(DocumentReference documentReference) {
+                                                Toast.makeText(getContext(), "Заказ успешно оформлен!",
+                                                        Toast.LENGTH_SHORT).show();
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() {
