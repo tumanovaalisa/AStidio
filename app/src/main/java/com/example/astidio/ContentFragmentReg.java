@@ -27,6 +27,7 @@ public class ContentFragmentReg extends Fragment {
 
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
+    private Button enterB;
 
     public ContentFragmentReg(){
         super(R.layout.reg_fragment);
@@ -43,6 +44,7 @@ public class ContentFragmentReg extends Fragment {
         EditText loginText = view.findViewById(R.id.login_ET);
         EditText emailText = view.findViewById(R.id.email_ET);
         EditText passwText = view.findViewById(R.id.password_ET);
+        enterB = view.findViewById(R.id.back);
 
         toLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +103,16 @@ public class ContentFragmentReg extends Fragment {
                     Toast.makeText(getContext(), "Введите данные",
                             Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+        enterB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FrameLayout frameLayout = (FrameLayout) getActivity().getWindow().findViewById(R.id.fragment_container_view_login);
+                frameLayout.setVisibility(View.VISIBLE);
+
+                FrameLayout frameLayout2 = (FrameLayout) getActivity().getWindow().findViewById(R.id.fragment_container_view_reg);
+                frameLayout2.setVisibility(View.INVISIBLE);
             }
         });
     }
