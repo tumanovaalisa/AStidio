@@ -76,7 +76,17 @@ public class ContentFragmentReg extends Fragment {
                                         String uid = currentUser.getUid();
                                         Map<String, Object> user1 = new HashMap<>();
                                         user1.put("Uid", uid);
-                                        user1.put("Name", loginText.getText().toString());
+                                        String[] FIO = loginText.getText().toString().split(" ");
+                                        int k = 0;
+                                        for (String name : FIO) {
+                                            if (k == 0) {
+                                                user1.put("Lastname", name);
+                                                k++;
+                                            } else if (k == 1) {
+                                                user1.put("Name", name);
+                                                k++;
+                                            }
+                                        }
                                         user1.put("Email", emailText.getText().toString());
                                         user1.put("Role", "п");
 
@@ -85,6 +95,9 @@ public class ContentFragmentReg extends Fragment {
                                                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                                     @Override
                                                     public void onSuccess(DocumentReference documentReference) {
+                                                        CurrentUser.name = user1.get("Name").toString();
+                                                        CurrentUser.email = user1.get("Email").toString();
+                                                        CurrentUser.id = documentReference.getId().toString();
                                                     }
                                                 })
                                                 .addOnFailureListener(new OnFailureListener() {

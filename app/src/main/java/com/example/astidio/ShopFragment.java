@@ -85,7 +85,7 @@ public class ShopFragment extends Fragment {
 
                                 orderUser.put("Date", "24.01.2024 17:25:00");
                                 orderUser.put("IdC", CurrentUser.id);
-                                orderUser.put("Price", Double.toString(price));
+                                orderUser.put("Price", price);
                                 orderUser.put("Products", map);
 
                                 db.collection("ShopOrders")
@@ -93,6 +93,8 @@ public class ShopFragment extends Fragment {
                                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                             @Override
                                             public void onSuccess(DocumentReference documentReference) {
+                                                Toast.makeText(getContext(), "Заказ успешно оформлен!",
+                                                        Toast.LENGTH_SHORT).show();
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() {

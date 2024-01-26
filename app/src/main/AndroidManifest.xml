@@ -37,5 +37,13 @@
             android:name=".RedactActivity"
             android:exported="false">
         </activity>
+        <activity
+            android:name=".OrdersActivity"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".HistoryActivity"
+            android:exported="false">
+        </activity>
     </application>
 </manifest>
