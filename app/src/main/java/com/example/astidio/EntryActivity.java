@@ -11,4 +11,5 @@ public class EntryActivity extends AppCompatActivity {
 
         setContentView(R.layout.entry_activity);
     }
+
 }
