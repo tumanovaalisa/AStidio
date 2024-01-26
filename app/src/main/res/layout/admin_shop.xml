@@ -31,7 +31,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/shop_redact"/>
+            android:id="@+id/shop_redact"
+            android:padding="5dp"/>
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:onClick="addProduct"
             android:layout_width="wrap_content"
