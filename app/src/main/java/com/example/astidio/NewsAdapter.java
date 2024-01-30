@@ -38,8 +38,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         // Устанавливаем данные в элементы интерфейса
         holder.nameTextView.setText(news.getTitle());
         Glide.with(context)
-                .load(news.getImageUrl()) // Замените на ваш путь к изображению
-                .into(holder.pictureImageView);// Замените на ваш способ загрузки изображения
+                .load(news.getImageUrl())
+                .into(holder.pictureImageView);
         holder.buttonTextView.setText(news.getDescription());
 
     }

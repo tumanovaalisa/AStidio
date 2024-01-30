@@ -8,6 +8,9 @@
         <item name="cornerSizeTopLeft">25dp</item>
         <item name="cornerSizeTopRight">25dp</item>
     </style>
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="android:textColorHint">@color/purple</item>
+    </style>
 
 
 </resources>
