@@ -1,10 +1,12 @@
 package com.example.astidio;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,6 +25,7 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.ViewHolder> 
         TextView priceTextView;
         TextView descTextView;
         TextView amountTextView;
+        Button button;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -32,6 +35,7 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.ViewHolder> 
             priceTextView = (TextView) itemView.findViewById(R.id.price);
             descTextView = (TextView) itemView.findViewById(R.id.description);
             amountTextView = (TextView) itemView.findViewById(R.id.amount);
+            button = itemView.findViewById(R.id.redact);
         }
     }
 
@@ -69,6 +73,21 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.ViewHolder> 
         textView3.setText("Осталось: " + String.valueOf(product.getAmountProduct()));
         TextView textView4 = holder.descTextView;
         textView4.setText(product.getDescriptionProduct());
+
+        holder.button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), RedactActivity.class);
+                intent.putExtra("selectedId", product.getIdProduct());
+                intent.putExtra("selectedName", product.getNameProduct());
+                intent.putExtra("selectedPrice", Double.toString(product.getPriceProduct()));
+                intent.putExtra("selectedAmount", Integer.toString(product.getAmountProduct()));
+                intent.putExtra("selectedSale", Integer.toString(product.getSaleProduct()));
+                intent.putExtra("selectedDescription", product.getDescriptionProduct());
+                intent.putExtra("selectedImage", product.getImgProduct());
+                v.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override

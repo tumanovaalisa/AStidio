@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -68,7 +70,10 @@ public class AddActivity extends AppCompatActivity {
             Intent intent = new Intent(this, AdminActivity.class);
             startActivity(intent);
         }
-
+        else {
+            Toast.makeText(this, "Введите все данные",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void toAdmin(View view) {

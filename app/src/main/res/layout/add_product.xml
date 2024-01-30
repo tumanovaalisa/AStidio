@@ -83,7 +83,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="75dp"
         android:hint="Фото"
         android:layout_margin="10dp"
         android:textColorHint="@color/purple"
