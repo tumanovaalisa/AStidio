@@ -2,15 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
     <SearchView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/search_teacher"
-        android:background="@color/light"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:queryHint="Введите направление"
         style="@style/SearchViewStyle"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@color/purple"
+        android:layout_marginBottom="10dp"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/teachers"
         android:layout_width="match_parent"
