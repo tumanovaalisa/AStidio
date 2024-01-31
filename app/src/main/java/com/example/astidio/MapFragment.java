@@ -42,11 +42,11 @@ public class MapFragment extends Fragment {
 
         IMapController mapController = mapView.getController();
         mapController.setZoom(18.0);
-        mapController.setCenter(new GeoPoint(55.7414, 37.6208));
+        mapController.setCenter(new GeoPoint(59.9401, 30.3260));
 
         // Добавление маркера
         Marker marker = new Marker(mapView);
-        marker.setPosition(new GeoPoint(55.7414, 37.6208));
+        marker.setPosition(new GeoPoint(59.9401, 30.3260));
         marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
         mapView.getOverlays().add(marker);
         mapButton.setOnClickListener(new View.OnClickListener() {

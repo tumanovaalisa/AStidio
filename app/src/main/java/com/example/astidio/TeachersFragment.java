@@ -35,7 +35,7 @@ public class TeachersFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         db = FirebaseFirestore.getInstance();
         teacherList = new ArrayList<>();
-        teacherAdapter = new TeacherAdapter(getContext(), filteredTeacherList);
+        teacherAdapter = new TeacherAdapter(getContext(), teacherList);
         recyclerView = view.findViewById(R.id.teachers);
         recyclerView.setAdapter(teacherAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
