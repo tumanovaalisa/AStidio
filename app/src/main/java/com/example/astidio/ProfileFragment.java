@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -26,6 +27,7 @@ import java.util.Map;
 public class ProfileFragment extends Fragment {
 
     CardView cardView;
+    CardView cardViewMap;
 
     public ProfileFragment(){super(R.layout.personal_fragment);}
 
@@ -37,12 +39,28 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         cardView = view.findViewById(R.id.toHistory);
-
+        cardViewMap = view.findViewById(R.id.map);
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), HistoryActivity.class);
                 startActivity(intent);
+            }
+        });
+        cardViewMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                // Проверяем, есть ли фрагменты в стеке
+                if (fragmentManager.getBackStackEntryCount() > 0) {
+                    // Удаляем текущий фрагмент из стека
+                    fragmentManager.popBackStack();
+                } else {
+                    MapFragment map = new MapFragment();
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.fl_content, map)
+                            .commit();
+                }
             }
         });
     }

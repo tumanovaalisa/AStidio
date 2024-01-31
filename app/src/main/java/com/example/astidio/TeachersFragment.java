@@ -22,7 +22,7 @@ public class TeachersFragment extends Fragment {
     private List<Teacher> teacherList;
     private FirebaseFirestore db;
     RecyclerView recyclerView;
-    private List<Teacher> filteredTeacherList; // Для хранения отфильтрованного списка
+    private List<Teacher> filteredTeacherList;
     SearchView searchView;
     public TeachersFragment(){super(R.layout.teachers_list);}
 
@@ -35,7 +35,7 @@ public class TeachersFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         db = FirebaseFirestore.getInstance();
         teacherList = new ArrayList<>();
-        teacherAdapter = new TeacherAdapter(getContext(), teacherList);
+        teacherAdapter = new TeacherAdapter(getContext(), filteredTeacherList);
         recyclerView = view.findViewById(R.id.teachers);
         recyclerView.setAdapter(teacherAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
@@ -58,7 +58,6 @@ public class TeachersFragment extends Fragment {
             }
         });
     }
-
     private void filter(String query) {
         filteredTeacherList.clear();
         for (Teacher teacher : teacherList) {
@@ -79,8 +78,8 @@ public class TeachersFragment extends Fragment {
                             String danceType = document.getString("direction");
                             Teacher teacher = new Teacher(teacherImageResId,teacherName,danceType);
                             teacherList.add(teacher);
+                            filteredTeacherList.add(teacher);
                         }
-                        // Уведомление адаптера о изменении набора данных
                         teacherAdapter.notifyDataSetChanged();
                     }
                 });

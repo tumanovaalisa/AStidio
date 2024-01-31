@@ -9,4 +9,5 @@
     <color name="names">#9162c8</color>
     <color name="light">#759162C8</color>
     <color name="cards">#EFEFEF</color>
+    <color name="transparent">#00EFEFEF</color>
 </resources>
