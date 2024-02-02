@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 
@@ -28,6 +29,8 @@ public class ProfileFragment extends Fragment {
 
     CardView cardView;
     CardView cardViewMap;
+    ImageButton signOut;
+    private FirebaseAuth mAuth;
 
     public ProfileFragment(){super(R.layout.personal_fragment);}
 
@@ -40,11 +43,22 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         cardView = view.findViewById(R.id.toHistory);
         cardViewMap = view.findViewById(R.id.map);
+        signOut = view.findViewById(R.id.signOut);
+        mAuth = FirebaseAuth.getInstance();
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), HistoryActivity.class);
                 startActivity(intent);
+            }
+        });
+        signOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.signOut();
+                Intent intent = new Intent(getContext(), EntryActivity.class);
+                startActivity(intent);
+
             }
         });
         cardViewMap.setOnClickListener(new View.OnClickListener() {
