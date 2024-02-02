@@ -59,27 +59,6 @@ public class MainFragment extends Fragment {
                 });
     }
     private void setUserName(TextView textView) {
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        if (auth.getCurrentUser() != null) {
-            String Uid = auth.getCurrentUser().getUid();
-
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            db.collection("Users")
-                    .document(Uid)
-                    .get()
-                    .addOnSuccessListener(documentSnapshot -> {
-                        if (documentSnapshot.exists()) {
-                            String name = documentSnapshot.getString("Name");
-                            textView.setText("Привет, "+name+"!");
-                        } else {
-                            textView.setText("Привет!");
-                        }
-                    })
-                    .addOnFailureListener(e -> {
-                        textView.setText("Error: " + e.getMessage());
-                    });
-        }
+        textView.setText("Привет, " + CurrentUser.name + "!");
     }
-
-
 }
