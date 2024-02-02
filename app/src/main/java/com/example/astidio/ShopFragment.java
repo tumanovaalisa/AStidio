@@ -23,6 +23,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -80,7 +82,9 @@ public class ShopFragment extends Fragment {
 
                                 Map<String, Object> orderUser = new HashMap<>();
 
-                                orderUser.put("Date", "24.01.2024 17:25:00");
+                                LocalDate localDate = LocalDate.now();
+                                LocalTime localTime = LocalTime.now();
+                                orderUser.put("Date", localDate.toString() + " " + localTime.toString());
                                 orderUser.put("IdC", CurrentUser.id);
                                 orderUser.put("Price", price);
                                 orderUser.put("Products", map);

@@ -14,7 +14,7 @@
             android:layout_height="30dp"
             android:layout_marginRight="10dp"
             android:src="@drawable/more1"
-            android:onClick="backUser"/>
+            android:id="@+id/backProfile"/>
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
