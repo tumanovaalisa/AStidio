@@ -41,7 +41,7 @@ public class TeachersFragment extends Fragment {
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         fetchTeacherDetails();
         searchView = view.findViewById(R.id.search_teacher);
-        filteredTeacherList = new ArrayList<>(teacherList);
+        filteredTeacherList = new ArrayList<>();
         setupSearchView();
     }
     private void setupSearchView() {
@@ -54,19 +54,21 @@ public class TeachersFragment extends Fragment {
             @Override
             public boolean onQueryTextChange(String newText) {
                 filter(newText);
+
                 return true;
             }
         });
     }
     private void filter(String query) {
-        filteredTeacherList.clear();
-        for (Teacher teacher : teacherList) {
+        teacherList.clear();
+        for (Teacher teacher : filteredTeacherList) {
             if (teacher.getDanceType().toLowerCase().contains(query.toLowerCase())) {
-                filteredTeacherList.add(teacher);
+                teacherList.add(teacher);
             }
         }
         teacherAdapter.notifyDataSetChanged();
     }
+
     private void fetchTeacherDetails() {
         db.collection("Teachers")
                 .get()
