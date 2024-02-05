@@ -6,16 +6,18 @@
     app:cardCornerRadius="15dp"
     android:layout_margin="10dp">
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:padding="15dp">
         <LinearLayout
-            android:layout_width="250dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="15dp">
+            android:layout_weight="3">
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Название направления"
                 android:fontFamily="sans-serif-black"
@@ -23,7 +25,7 @@
                 android:textColor="@color/names"
                 android:id="@+id/dance_TV"/>
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/time_TV"
                 android:layout_marginBottom="10dp"
@@ -39,7 +41,7 @@
                     android:id="@+id/img_teacher"
                     android:src="@mipmap/ic_launcher"/>
                 <TextView
-                    android:layout_width="150dp"
+                    android:layout_width="match_parent"
                     android:layout_gravity="center_vertical"
                     android:layout_height="wrap_content"
                     android:id="@+id/name_TV"
@@ -50,30 +52,30 @@
                     android:textColor="@color/names"/>
             </LinearLayout>
         </LinearLayout>
-
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="6">
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/light_purple"
                 app:cardCornerRadius="15dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="15dp"
                 android:layout_gravity="center">
                 <TextView
                     android:id="@+id/seats"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@color/light_purple"
                     android:padding="7dp"
                     android:text="Кол-во мест"
-                    android:textColor="@color/purple"
-                    android:background="@color/light_purple"/>
+                    android:textColor="@color/purple" />
             </androidx.cardview.widget.CardView>
             <com.google.android.material.button.MaterialButton
                 style="@style/Widget.MaterialComponents.Button"
-                android:layout_width="wrap_content"
+                android:layout_width="75dp"
                 android:layout_height="45dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"

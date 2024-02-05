@@ -45,7 +45,7 @@
             android:exported="false">
         </activity>
         <activity
-            android:name=".HistoryActivity"
+            android:name=".HistoryFragment"
             android:exported="false">
         </activity>
     </application>
