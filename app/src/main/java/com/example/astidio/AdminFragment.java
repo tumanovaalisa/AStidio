@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +23,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class AdminFragment extends Fragment {
@@ -35,6 +38,8 @@ public class AdminFragment extends Fragment {
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     RecyclerView recyclerView;
+    ArrayList<Product> products = new ArrayList<>();
+    private SearchView searchView;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -43,7 +48,6 @@ public class AdminFragment extends Fragment {
         db = FirebaseFirestore.getInstance();
         recyclerView = (RecyclerView) view.findViewById(R.id.shop_redact);
 
-        ArrayList<Product> products = new ArrayList<>();
         db.collection("Products")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -70,6 +74,20 @@ public class AdminFragment extends Fragment {
                         }
                     }
                 });
+        searchView = (SearchView) view.findViewById(R.id.search_admin);
+        searchView.clearFocus();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                filterList(s);
+                return true;
+            }
+        });
 
         Button bt1 = view.findViewById(R.id.addProduct);
         ImageButton bt2 = view.findViewById(R.id.exitAdmin);
@@ -89,5 +107,32 @@ public class AdminFragment extends Fragment {
                 startActivity(intent);
             }
         });
+    }
+
+    private void filterList(String text) {
+        List<Product> filteredList = new ArrayList<>();
+        for (Product product : products){
+            if (text.toLowerCase().isEmpty()){
+                filteredList.clear();
+            }
+            else if (!text.toLowerCase().isEmpty()){
+                if (product.getNameProduct().toLowerCase().contains(text.toLowerCase())){
+                    filteredList.add(product);
+                }
+            }
+        }
+        if (filteredList.isEmpty()){
+            if (!text.equals("")){
+                Toast.makeText(getContext(), "Товара с таким названием нет",
+                        Toast.LENGTH_SHORT).show();
+            }
+            AdminAdapter adapter = new AdminAdapter(getContext(), products);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        }else {
+            AdminAdapter adapter = new AdminAdapter(getContext(), filteredList);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        }
     }
 }

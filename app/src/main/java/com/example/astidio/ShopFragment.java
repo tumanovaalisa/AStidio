@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import android.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,6 +34,8 @@ import java.util.Map;
 public class ShopFragment extends Fragment {
     private FirebaseFirestore db;
     RecyclerView recyclerView;
+    private SearchView searchView;
+    ArrayList<Product> products = new ArrayList<>();
     static Button getOrder;
 
     public ShopFragment(){super(R.layout.shop_fragment);}
@@ -112,10 +115,25 @@ public class ShopFragment extends Fragment {
                 dialog.show();
             }
         });
+
+        searchView = (SearchView) view.findViewById(R.id.search_shop);
+        searchView.clearFocus();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                filterList(s);
+                return true;
+            }
+        });
     }
 
     public void updateDB(){
-        ArrayList<Product> products = new ArrayList<>();
+
         db.collection("Products")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -144,4 +162,30 @@ public class ShopFragment extends Fragment {
                 });
     }
 
+    private void filterList(String text) {
+        List<Product> filteredList = new ArrayList<>();
+        for (Product product : products){
+            if (text.toLowerCase().isEmpty()){
+                filteredList.clear();
+            }
+            else if (!text.toLowerCase().isEmpty()){
+                if (product.getNameProduct().toLowerCase().contains(text.toLowerCase())){
+                    filteredList.add(product);
+                }
+            }
+        }
+        if (filteredList.isEmpty()){
+            if (!text.equals("")){
+                Toast.makeText(getContext(), "Товара с таким названием нет",
+                        Toast.LENGTH_SHORT).show();
+            }
+            ProductAdapter adapter = new ProductAdapter(getContext(), products);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        }else {
+            ProductAdapter adapter = new ProductAdapter(getContext(), filteredList);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        }
+    }
 }

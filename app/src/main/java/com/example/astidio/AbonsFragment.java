@@ -2,9 +2,12 @@ package com.example.astidio;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import android.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,6 +34,7 @@ public class AbonsFragment extends Fragment {
 
     private FirebaseFirestore db;
     RecyclerView recyclerView;
+    private SearchView searchView;
     List<String> keys;
     Map<String, List<String>> usersInfo = new HashMap<>();
     List<Abon> abons = new ArrayList<>();
@@ -66,5 +70,48 @@ public class AbonsFragment extends Fragment {
                         }
                     }
                 });
+
+        searchView = (SearchView) view.findViewById(R.id.search_abon);
+        searchView.clearFocus();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                filterList(s);
+                return true;
+            }
+        });
+
+    }
+
+    private void filterList(String text) {
+        List<Abon> filteredList = new ArrayList<>();
+        for (Abon abon : abons){
+            if (text.toLowerCase().isEmpty()){
+                filteredList.clear();
+            }
+            else if (!text.toLowerCase().isEmpty()){
+                if (abon.getEmail().toLowerCase().contains(text.toLowerCase())){
+                    filteredList.add(abon);
+                }
+            }
+        }
+        if (filteredList.isEmpty()){
+            if (!text.equals("")){
+                Toast.makeText(getContext(), "Клиента с такой почтой нет",
+                        Toast.LENGTH_SHORT).show();
+            }
+            AbonAdapter adapter = new AbonAdapter(getContext(), abons);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        }else {
+            AbonAdapter adapter = new AbonAdapter(getContext(), filteredList);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        }
     }
 }
