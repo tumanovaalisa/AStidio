@@ -1,16 +1,20 @@
 package com.example.astidio;
 
-import android.content.Intent;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.view.View;
-
+import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -20,59 +24,42 @@ import java.util.List;
 import java.util.Map;
 
 public class AdminActivity extends AppCompatActivity {
-
     private FirebaseFirestore db;
-    RecyclerView recyclerView;
+    private FirebaseAuth mAuth;
+    private NavigationBarView.OnItemSelectedListener mOnItemSelectedListener
+            = new NavigationBarView.OnItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            if (item.getItemId() == R.id.navigation_adminshop) {
+                loadFragment(AdminFragment.newInstance());
+                return true;
+            }else if (item.getItemId() == R.id.navigation_orders){
+                loadFragment(OrdersFragment.newInstance());
+                return true;
+            }else if (item.getItemId() == R.id.navigation_abons) {
+                loadFragment(AbonsFragment.newInstance());
+                return true;
+            }
+            return false;
+        }
+    };
 
+    private void loadFragment(Fragment fragment) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.fl_content1, fragment);
+        ft.commit();
+    }
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.admin_shop);
-
+        setContentView(R.layout.admin_activity);
         db = FirebaseFirestore.getInstance();
-        recyclerView = (RecyclerView) findViewById(R.id.shop_redact);
+        mAuth = FirebaseAuth.getInstance();
 
-        ArrayList<Product> products = new ArrayList<>();
-        db.collection("Products")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Product product = new Product();
-                                String id = document.getId().toString();
-                                product.setIdProduct(id);
-                                for(Map.Entry<String,Object> docs : document.getData().entrySet()){
-                                    if (docs.getKey().equals("Name")) product.setNameProduct(docs.getValue().toString());
-                                    if (docs.getKey().equals("Price")) product.setPriceProduct(Double.parseDouble(docs.getValue().toString()));
-                                    if (docs.getKey().equals("Amount")) product.setAmountProduct(Integer.parseInt(docs.getValue().toString()));
-                                    if (docs.getKey().equals("Sale")) product.setSaleProduct(Integer.parseInt(docs.getValue().toString()));
-                                    if (docs.getKey().equals("Photo")) product.setImgProduct(docs.getValue().toString());
-                                    if (docs.getKey().equals("Description")) product.setDescriptionProduct(docs.getValue().toString());
-                                }
-                                products.add(product);
-                            }
-                            AdminAdapter adapter = new AdminAdapter(getApplicationContext(), products);
-                            recyclerView.setAdapter(adapter);
-                            recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                        }
-                    }
-                });
-        }
-
-    public void addProduct(View view) {
-        Intent intent = new Intent(this, AddActivity.class);
-        startActivity(intent);
-    }
-
-    public void historyOrders(View view) {
-        Intent intent = new Intent(this, OrdersActivity.class);
-        startActivity(intent);
-    }
-
-    public void exitAdmin(View view) {
-        Intent intent = new Intent(this, EntryActivity.class);
-        startActivity(intent);
+        BottomNavigationView navigationView = findViewById(R.id.navigation_admin);
+        navigationView.setOnItemSelectedListener(mOnItemSelectedListener);
+        loadFragment(AdminFragment.newInstance());
     }
 }

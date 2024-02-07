@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_adminshop"
+        android:icon="@drawable/shopping_cart"
+        android:title="Магазин" />
+
+    <item
+        android:id="@+id/navigation_orders"
+        android:icon="@drawable/list"
+        android:title="Заказы" />
+
+    <item
+        android:id="@+id/navigation_abons"
+        android:icon="@drawable/abon"
+        android:title="Абонементы" />
+
+</menu>

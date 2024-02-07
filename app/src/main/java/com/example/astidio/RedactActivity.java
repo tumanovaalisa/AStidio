@@ -11,7 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class RedactActivity extends AppCompatActivity {
@@ -61,7 +60,7 @@ public class RedactActivity extends AppCompatActivity {
         if (!nameTxt.getText().toString().equals("") && !descriptionTxt.getText().toString().equals("")
                 && !amountTxt.getText().toString().equals("") && !photoTxt.getText().toString().equals("")
                 && !priceTxt.getText().toString().equals("") && !saleTxt.getText().toString().equals("")) {
-            Intent intent = new Intent(this, AdminActivity.class);
+            Intent intent = new Intent(this, AdminFragment.class);
             DocumentReference userRef = db.collection("Products").document(product.getIdProduct());
             if (!nameTxt.getText().equals(product.getNameProduct()))
                 userRef.update("Name", nameTxt.getText().toString());
@@ -84,12 +83,12 @@ public class RedactActivity extends AppCompatActivity {
     }
 
     public void toBack(View view) {
-        Intent intent = new Intent(this, AdminActivity.class);
+        Intent intent = new Intent(this, AdminFragment.class);
         startActivity(intent);
     }
 
     public void deleteProduct(View view) {
-        Intent intent = new Intent(this, AdminActivity.class);
+        Intent intent = new Intent(this, AdminFragment.class);
         DocumentReference userRef = db.collection("Products").document(product.getIdProduct());
         userRef.delete();
         startActivity(intent);
