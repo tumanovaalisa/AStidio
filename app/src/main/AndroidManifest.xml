@@ -33,6 +33,10 @@
             android:exported="false">
         </activity>
         <activity
+            android:name=".AddAbonActivity"
+            android:exported="false">
+        </activity>
+        <activity
             android:name=".RedactActivity"
             android:exported="false">
         </activity>

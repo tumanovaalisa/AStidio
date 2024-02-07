@@ -31,7 +31,6 @@ public class OrdersFragment  extends Fragment {
         return new OrdersFragment();
     }
 
-
     private FirebaseFirestore db;
     RecyclerView recyclerView;
     List<String> keys;

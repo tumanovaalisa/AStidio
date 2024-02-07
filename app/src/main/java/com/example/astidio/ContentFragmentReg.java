@@ -89,6 +89,7 @@ public class ContentFragmentReg extends Fragment {
                                         }
                                         user1.put("Email", emailText.getText().toString());
                                         user1.put("Role", "п");
+                                        user1.put("Date", "");
 
                                         db.collection("Users")
                                                 .add(user1)
