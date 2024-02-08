@@ -64,6 +64,8 @@ public class TimetableFragment extends Fragment implements CalendarAdapter.onIte
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = TimetableListBinding.inflate(inflater, container, false);
         setUpAdapter();
+
+
         binding.next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,7 +139,6 @@ public class TimetableFragment extends Fragment implements CalendarAdapter.onIte
 
         binding.DateRecyclerView.setAdapter(adapter);
     }
-
 
     public void isUserAlreadyRegistered(Timetable timetable) {
         FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -307,7 +308,17 @@ public class TimetableFragment extends Fragment implements CalendarAdapter.onIte
 
     @Override
     public void onItemClick(CalendarDateModel model, int position) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        String selectedDate = sdf.format(model.getData());
+        // Фильтруем список занятий по выбранной дате
+        List<Timetable> filteredTimetableList = new ArrayList<>();
+        for (Timetable timetable : timetableList) {
+            if (timetable.getDate().equals(selectedDate)) {
+                filteredTimetableList.add(timetable);
+            }
+        }
 
+        timetableAdapter.setData(filteredTimetableList);
     }
 
 
@@ -345,8 +356,12 @@ public class TimetableFragment extends Fragment implements CalendarAdapter.onIte
 
         calendarList2.clear();
         calendarList2.addAll(calendarList);
-        adapter.setOnItemClickListener(this);
+        adapter.setOnItemClickListener(TimetableFragment.this);
         adapter.setData(calendarList);
+        /*binding.DateRecyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener((model, position) -> {
+            onItemClick(model, position);
+        });*/
     }
 
 

@@ -54,18 +54,19 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
             android:orientation="vertical"
             android:layout_gravity="center">
             <com.google.android.material.button.MaterialButton
                 style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="wrap_content"
-                android:layout_height="45dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="Отменить"
+                android:text="Не приду"
                 app:cornerRadius="12dp"
                 android:backgroundTint="@color/purple"
                 android:textColor="@color/white"
-                android:textSize="15dp"
+                android:textSize="12dp"
                 android:id="@+id/enrol"
                 app:strokeColor="@color/white"/>
 
