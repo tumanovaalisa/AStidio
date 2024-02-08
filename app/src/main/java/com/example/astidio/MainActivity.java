@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updateDB(){
+        products.clear();
         db.collection("Products")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
