@@ -1,5 +1,6 @@
 package com.example.astidio;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.text.SimpleDateFormat;
@@ -49,9 +50,10 @@ public class TimetableFragment extends Fragment implements CalendarAdapter.onIte
     private List<Regs> registrationList = new ArrayList<>();
     private ArrayList<CalendarDateModel> calendarList2;
     private ArrayList<Date> dates;
-    private Calendar cal = Calendar.getInstance(Locale.ENGLISH);
-    private Calendar currentDate = Calendar.getInstance(Locale.ENGLISH);
-    private SimpleDateFormat sdf = new SimpleDateFormat("MMMM yyyy", Locale.ENGLISH);
+    private Calendar cal = Calendar.getInstance(new Locale("ru", "RU"));
+    private Calendar currentDate = Calendar.getInstance(new Locale("ru", "RU"));
+    private SimpleDateFormat sdf = new SimpleDateFormat("LLLL yyyy", new Locale("ru", "RU"));
+
 
     public TimetableFragment(){super(R.layout.timetable_list);}
 
@@ -64,7 +66,6 @@ public class TimetableFragment extends Fragment implements CalendarAdapter.onIte
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = TimetableListBinding.inflate(inflater, container, false);
         setUpAdapter();
-
 
         binding.next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,11 +134,14 @@ public class TimetableFragment extends Fragment implements CalendarAdapter.onIte
                 }
 
                 adapter.setData(calendarList2);
-                adapter.setOnItemClickListener(TimetableFragment.this);
+                onItemClick(model, position);
             }
         };
 
         binding.DateRecyclerView.setAdapter(adapter);
+
+        // Установка слушателя кликов для адаптера
+        adapter.setOnItemClickListener(this);
     }
 
     public void isUserAlreadyRegistered(Timetable timetable) {
@@ -262,19 +266,19 @@ public class TimetableFragment extends Fragment implements CalendarAdapter.onIte
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             // Извлечение данных из коллекции Timetable
                             try {
-                            String date = document.getString("date");
-                            Date date1 = sdf.parse(date);
-                            // Создание объекта Timetable и добавление его в список
-                            if (date1.after(currentDate)) {
-                                String name = document.getString("name");
-                                String timeEnd = document.getString("timeEnd");
-                                String timeStart = document.getString("timeStart");
-                                String teacherId = document.getString("teacherId");
-                                Long amount = document.getLong("amount");
+                                String date = document.getString("date");
+                                Date date1 = sdf.parse(date);
+                                // Проверка, является ли дата сегодняшней
+                                if (isToday(date1)) {
+                                    String name = document.getString("name");
+                                    String timeEnd = document.getString("timeEnd");
+                                    String timeStart = document.getString("timeStart");
+                                    String teacherId = document.getString("teacherId");
+                                    Long amount = document.getLong("amount");
 
-                                // Получение дополнительных данных из коллекции Teachers с использованием teacherId
-                                fetchTeacherDetails(teacherId, document.getId(), date, name, timeEnd, timeStart, Integer.parseInt(String.valueOf(amount)));
-                            }
+                                    // Получение дополнительных данных из коллекции Teachers с использованием teacherId
+                                    fetchTeacherDetails(teacherId, document.getId(), date, name, timeEnd, timeStart, Integer.parseInt(String.valueOf(amount)));
+                                }
                             } catch (ParseException e) {
                                 // Обработка исключения, например, вывод сообщения об ошибке
                                 System.err.println("Ошибка при обработке даты");
@@ -284,6 +288,50 @@ public class TimetableFragment extends Fragment implements CalendarAdapter.onIte
                     }
                 });
     }
+    private void fetchDataFromFirestore1(String date2) {
+        Date currentDate = new Date();
+        // Форматирование даты
+        //SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        db.collection("Timetable")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        timetableList.clear();
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            // Извлечение данных из коллекции Timetable
+                            //try {
+                                String date = document.getString("date");
+                                //Date date1 = sdf.parse(date);
+                                // Проверка, является ли дата сегодняшней
+                                if (date.equals(date2)) {
+                                    String name = document.getString("name");
+                                    String timeEnd = document.getString("timeEnd");
+                                    String timeStart = document.getString("timeStart");
+                                    String teacherId = document.getString("teacherId");
+                                    Long amount = document.getLong("amount");
+
+                                    // Получение дополнительных данных из коллекции Teachers с использованием teacherId
+                                    fetchTeacherDetails(teacherId, document.getId(), date, name, timeEnd, timeStart, Integer.parseInt(String.valueOf(amount)));
+                                }
+                            /*} catch (ParseException e) {
+                                // Обработка исключения, например, вывод сообщения об ошибке
+                                System.err.println("Ошибка при обработке даты");
+                                e.printStackTrace();
+                            }*/
+                        }
+                    }
+                });
+    }
+
+    private boolean isToday(Date date) {
+        Calendar cal1 = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+        cal1.setTime(date);
+        cal2.setTime(new Date());
+        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+                cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
+    }
+
 
     @SuppressLint("NotifyDataSetChanged")
     private void fetchTeacherDetails(String id, String idT, String date, String name, String timeEnd, String timeStart, int amount) {
@@ -310,15 +358,15 @@ public class TimetableFragment extends Fragment implements CalendarAdapter.onIte
     public void onItemClick(CalendarDateModel model, int position) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
         String selectedDate = sdf.format(model.getData());
-        // Фильтруем список занятий по выбранной дате
+        /*// Фильтруем список занятий по выбранной дате
         List<Timetable> filteredTimetableList = new ArrayList<>();
         for (Timetable timetable : timetableList) {
             if (timetable.getDate().equals(selectedDate)) {
                 filteredTimetableList.add(timetable);
             }
-        }
-
-        timetableAdapter.setData(filteredTimetableList);
+        }*/
+        fetchDataFromFirestore1(selectedDate);
+        //timetableAdapter.setData(filteredTimetableList);
     }
 
 
@@ -358,10 +406,6 @@ public class TimetableFragment extends Fragment implements CalendarAdapter.onIte
         calendarList2.addAll(calendarList);
         adapter.setOnItemClickListener(TimetableFragment.this);
         adapter.setData(calendarList);
-        /*binding.DateRecyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener((model, position) -> {
-            onItemClick(model, position);
-        });*/
     }
 
 

@@ -57,6 +57,9 @@ public abstract class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapt
         holder.itemView.setOnClickListener(view -> {
             adapterPosition = position;
             notifyDataSetChanged();
+            if (mListener != null) {
+                mListener.onItemClick(itemList, position); // Уведомить слушателя о щелчке на элементе
+            }
         });
 
         Context context = holder.itemView.getContext();

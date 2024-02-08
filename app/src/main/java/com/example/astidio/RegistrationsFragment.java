@@ -21,12 +21,16 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -34,8 +38,11 @@ import java.util.List;
 public class RegistrationsFragment extends Fragment {
     private RegistrationAdapter registrationAdapter;
     private List<Registration> registrationList;
-    private List<Registration> registrationListCopy;
+    //private List<Registration> registrationListCopy;
     private List<Regs> regList;
+    FirebaseAuth auth = FirebaseAuth.getInstance();
+    FirebaseUser currentUser = auth.getCurrentUser();
+    TextView ms;
     private FirebaseFirestore db;
     public RegistrationsFragment(){super(R.layout.registrations_fragment);}
 
@@ -50,11 +57,12 @@ public class RegistrationsFragment extends Fragment {
 
         // Инициализация RecyclerView и адаптера
         RecyclerView recyclerView = view.findViewById(R.id.timetable);
+        ms = view.findViewById(R.id.text);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         registrationList = new ArrayList<>();
-        registrationListCopy = new ArrayList<>();
+        //registrationListCopy = new ArrayList<>();
         regList = new ArrayList<>();
-        registrationAdapter = new RegistrationAdapter(getContext(), registrationListCopy);
+        registrationAdapter = new RegistrationAdapter(getContext(), registrationList);
         recyclerView.setAdapter(registrationAdapter);
         UserRegistered();
         registrationAdapter.setOnCancelButtonClickListener(new RegistrationAdapter.OnItemClickListener() {
@@ -105,55 +113,81 @@ public class RegistrationsFragment extends Fragment {
                 });
     }
 
-    private void fetchDataFromFirestore() {
+    private void fetchDataFromFirestore(String id) {
         Date currentDate = new Date();
         // Форматирование даты
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-        db.collection("Timetable")
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        registrationList.clear();
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            // Извлечение данных из коллекции Timetable
-                            try {
-                                String date = document.getString("date");
-                                Date date1 = sdf.parse(date);
-                                // Создание объекта Timetable и добавление его в список
-                                if (date1.after(currentDate)) {
-                                    String name = document.getString("name");
-                                    String timeEnd = document.getString("timeEnd");
-                                    String timeStart = document.getString("timeStart");
-                                    String teacherId = document.getString("teacherId");
+        DocumentReference documentRef = db.collection("Timetable").document(id);
 
-                                    // Получение дополнительных данных из коллекции Teachers с использованием teacherId
-                                    fetchTeacherDetails(teacherId, document.getId(), date, name, timeEnd, timeStart);
-                                }
+        // Получение документа по его ID
+        documentRef
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            try {
+                                String date = documentSnapshot.getString("date");
+                                Date date1 = sdf.parse(date);
+                                //Date cur = sdf.parse(String.valueOf(currentDate));
+                                // Создание объекта Timetable и добавление его в список
+                                //if (date1.after(cur)||date1.equals(cur) ){
+                                String name = documentSnapshot.getString("name");
+                                String timeEnd = documentSnapshot.getString("timeEnd");
+                                String timeStart = documentSnapshot.getString("timeStart");
+                                String teacherId = documentSnapshot.getString("teacherId");
+
+                                // Получение дополнительных данных из коллекции Teachers с использованием teacherId
+                                fetchTeacherDetails(teacherId, documentSnapshot.getId(), date, name, timeEnd, timeStart);
+                                //}
                             } catch (ParseException e) {
                                 // Обработка исключения, например, вывод сообщения об ошибке
                                 System.err.println("Ошибка при обработке даты");
                                 e.printStackTrace();
                             }
+                        } else {
+                            // Обработка случая, когда документ не найден
                         }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Обработка ошибки при получении документа
+                        e.printStackTrace();
                     }
                 });
     }
+
     public void UserRegistered() {
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = auth.getCurrentUser();
-        if(regList!=null) regList.clear(); // Очищаем список перед получением новых данных
-        db.collection("RegistrationsForClasses")
+        if(regList!=null) regList.clear();
+        if(registrationList!=null) registrationList.clear();
+        CollectionReference registrationsCollectionRef = db.collection("RegistrationsForClasses");
+        // Создание запроса для получения документов, где поле uid равно текущему пользователю
+        registrationsCollectionRef.whereEqualTo("uid", currentUser.getUid())
                 .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                        String idTimetable = document.getString("idTimetable");
-                        String date = document.getString("regDate");
-                        String uid = document.getString("uid");
-                        if (uid.equals(currentUser.getUid())) regList.add(new Regs(uid, idTimetable, date));
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        if (task.getResult().isEmpty()) {
+                            // Документов не найдено
+                            ms.setVisibility(View.VISIBLE);
+                            registrationAdapter.notifyDataSetChanged();
+                        } else {
+                            // Обработка успешно полученных документов
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String idTimetable = document.getString("idTimetable");
+                                fetchDataFromFirestore(idTimetable);
+                            }
+                        }
+                    } else {
+                        // Обработка ошибки при получении документов
+                        Exception exception = task.getException();
+                        if (exception != null) {
+                            exception.printStackTrace();
+                        }
+
                     }
-                    fetchDataFromFirestore();
-                })
-                .addOnFailureListener(e -> Log.e(TAG, "Error getting documents: ", e));
+                });
     }
     @SuppressLint("NotifyDataSetChanged")
     private void fetchTeacherDetails(String id, String idT, String date, String name, String timeEnd, String timeStart) {
@@ -168,14 +202,6 @@ public class RegistrationsFragment extends Fragment {
                                 String teacherName = document.getString("name");
                                 Registration registration = new Registration(idT, date, name, timeStart, timeEnd, teacherImageResId, teacherName);
                                 registrationList.add(registration);
-                            }
-                        }
-                        registrationListCopy.clear();
-                        for(int i=0; i<regList.size();i++){
-                            for (int j=0; j<registrationList.size();j++){
-                                if(regList.get(i).getIdTimetable().equals(registrationList.get(j).getId())) {
-                                    registrationListCopy.add(registrationList.get(j));
-                                }
                             }
                         }
                         registrationAdapter.notifyDataSetChanged();
