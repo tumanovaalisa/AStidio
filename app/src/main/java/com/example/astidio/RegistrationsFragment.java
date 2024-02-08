@@ -96,6 +96,12 @@ public class RegistrationsFragment extends Fragment {
                                             Log.d(TAG, "Документ успешно удален!");
                                             Toast.makeText(getContext(), "Запись отменена!",
                                                     Toast.LENGTH_SHORT).show();
+                                            // Удалить соответствующий объект Registration из registrationList
+                                            registrationList.remove(registration);
+                                            if (registrationList.size()==0) ms.setVisibility(View.VISIBLE);
+                                            // Уведомить адаптер об изменениях в данных
+                                            registrationAdapter.notifyDataSetChanged();
+
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
