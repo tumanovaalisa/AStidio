@@ -29,11 +29,11 @@
             android:exported="false">
         </activity>
         <activity
-            android:name=".AdminActivity"
+            android:name=".AddActivity"
             android:exported="false">
         </activity>
         <activity
-            android:name=".AddActivity"
+            android:name=".AddAbonActivity"
             android:exported="false">
         </activity>
         <activity
@@ -41,11 +41,7 @@
             android:exported="false">
         </activity>
         <activity
-            android:name=".OrdersActivity"
-            android:exported="false">
-        </activity>
-        <activity
-            android:name=".HistoryFragment"
+            android:name=".AdminActivity"
             android:exported="false">
         </activity>
     </application>

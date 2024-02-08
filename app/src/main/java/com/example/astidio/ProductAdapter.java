@@ -66,6 +66,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ProductAdapter.ViewHolder holder, int position) {
+        LinearLayout layout = holder.linearLayout;
         Product product = mProductList.get(position);
         TextView textView1 = holder.nameTextView;
         textView1.setText(product.getNameProduct());
@@ -82,14 +83,17 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         TextView textView4 = holder.descTextView;
         textView4.setText(product.getDescriptionProduct());
         TextView textView5 = holder.nTextView;
+        holder.deleteButton.setEnabled(false);
         if (CurrentUser.order.containsKey(product)){
             textView5.setText(CurrentUser.order.get(product).toString());
+            int bg = ContextCompat.getColor(context, R.color.light_pink);
+            layout.setBackgroundColor(bg);
+            ShopFragment.getOrder.setVisibility(View.VISIBLE);
+            holder.deleteButton.setEnabled(true);
         }
         else textView5.setText("0");
 
-        holder.deleteButton.setEnabled(false);
 
-        LinearLayout layout = holder.linearLayout;
         holder.addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

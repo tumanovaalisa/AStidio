@@ -7,7 +7,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,7 +22,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class OrdersActivity extends AppCompatActivity {
+public class OrdersFragment  extends Fragment {
+    public OrdersFragment() {
+        super(R.layout.orders_fragment);
+    }
+
+    public static OrdersFragment newInstance() {
+        return new OrdersFragment();
+    }
 
     private FirebaseFirestore db;
     RecyclerView recyclerView;
@@ -33,11 +40,10 @@ public class OrdersActivity extends AppCompatActivity {
 
     @SuppressLint("MissingInflatedId")
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_orders);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         db = FirebaseFirestore.getInstance();
-        recyclerView = (RecyclerView) findViewById(R.id.orders_list);
+        recyclerView = (RecyclerView) view.findViewById(R.id.orders_list);
 
         db.collection("Users")
                 .get()
@@ -96,15 +102,9 @@ public class OrdersActivity extends AppCompatActivity {
                             }
                             OrderAdapter adapter = new OrderAdapter(histories);
                             recyclerView.setAdapter(adapter);
-                            recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                         }
                     }
                 });
-    }
-
-
-    public void backAdmin(View view) {
-        Intent intent = new Intent(this, AdminActivity.class);
-        startActivity(intent);
     }
 }

@@ -67,7 +67,7 @@ public class AddActivity extends AppCompatActivity {
                         public void onFailure(@NonNull Exception e) {
                         }
                     });
-            Intent intent = new Intent(this, AdminActivity.class);
+            Intent intent = new Intent(this, AdminFragment.class);
             startActivity(intent);
         }
         else {
