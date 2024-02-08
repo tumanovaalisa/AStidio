@@ -1,6 +1,7 @@
 package com.example.astidio;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -57,6 +59,11 @@ public class TimetableAdapter extends RecyclerView.Adapter<TimetableAdapter.Time
         holder.teacherNameTextView.setText(timetable.getTeacherName());
         holder.availableSeatsTextView.setText(String.valueOf(timetable.getAvailableSeats()));
         // Обработка события кнопки enrol
+        if (timetable.getAvailableSeats()<1){
+            holder.enrolButton.setEnabled(false);
+            holder.enrolButton.setText("мест нет");
+            holder.enrolButton.setTextSize(10);
+        }
         holder.enrolButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,6 +73,11 @@ public class TimetableAdapter extends RecyclerView.Adapter<TimetableAdapter.Time
                 }
             }
         });
+    }
+    public void setData(List<Timetable> newData) {
+        timetableList.clear();
+        timetableList.addAll(newData);
+        notifyDataSetChanged(); // Обновляем RecyclerView
     }
     private TimetableAdapter.OnItemClickListener enrolButtonClickListener;
     public void setOnEnrolButtonClickListener(TimetableAdapter.OnItemClickListener listener) {

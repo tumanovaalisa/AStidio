@@ -35,7 +35,7 @@ public class CalendarDateModel {
     }
 
     public String getCalendarDay() {
-        SimpleDateFormat sdf = new SimpleDateFormat("EE", Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat("EE", new Locale("ru"));
         return sdf.format(data);
     }
 

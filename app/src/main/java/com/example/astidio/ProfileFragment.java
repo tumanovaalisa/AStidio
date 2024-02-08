@@ -17,6 +17,7 @@ public class ProfileFragment extends Fragment {
 
     CardView cardView;
     CardView cardViewMap;
+    CardView cardViewReg;
     ImageButton signOut;
     private FirebaseAuth mAuth;
 
@@ -32,6 +33,7 @@ public class ProfileFragment extends Fragment {
         cardView = view.findViewById(R.id.toHistory);
         cardViewMap = view.findViewById(R.id.map);
         signOut = view.findViewById(R.id.signOut);
+        cardViewReg = view.findViewById(R.id.regs);
         mAuth = FirebaseAuth.getInstance();
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +47,22 @@ public class ProfileFragment extends Fragment {
                     HistoryFragment map = new HistoryFragment();
                     fragmentManager.beginTransaction()
                             .replace(R.id.fl_content, map)
+                            .commit();
+                }
+            }
+        });
+        cardViewReg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                // Проверяем, есть ли фрагменты в стеке
+                if (fragmentManager.getBackStackEntryCount() > 0) {
+                    // Удаляем текущий фрагмент из стека
+                    fragmentManager.popBackStack();
+                } else {
+                    RegistrationsFragment regs = new RegistrationsFragment();
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.fl_content, regs)
                             .commit();
                 }
             }

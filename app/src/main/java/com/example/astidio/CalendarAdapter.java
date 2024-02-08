@@ -1,4 +1,5 @@
 package com.example.astidio;
+import java.text.SimpleDateFormat;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -14,11 +15,15 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 public abstract class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.CalendarViewHolder> {
 
     private ArrayList<CalendarDateModel> list = new ArrayList<>();
-    private int adapterPosition = -1;
+    private int adapterPosition = 0;
     private onItemClickListener mListener;
 
     public abstract void onItemClick(CalendarDateModel model, int position);
@@ -26,6 +31,7 @@ public abstract class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapt
     public interface onItemClickListener {
         void onItemClick(CalendarDateModel model, int position);
     }
+
 
     public void setOnItemClickListener(onItemClickListener listener) {
         mListener = listener;
@@ -40,11 +46,13 @@ public abstract class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapt
         return new CalendarViewHolder(view);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onBindViewHolder(@NonNull CalendarViewHolder holder, @SuppressLint("RecyclerView") int position) {
         CalendarDateModel itemList = list.get(position);
         holder.calendarDay.setText(itemList.getCalendarDay());
         holder.calendarDate.setText(itemList.getCalendarDate());
+
 
         holder.itemView.setOnClickListener(view -> {
             adapterPosition = position;
@@ -73,6 +81,7 @@ public abstract class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapt
         return list.size();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setData(ArrayList<CalendarDateModel> calendarList) {
         list.clear();
         list.addAll(calendarList);
