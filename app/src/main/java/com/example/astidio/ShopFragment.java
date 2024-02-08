@@ -35,7 +35,6 @@ public class ShopFragment extends Fragment {
     private FirebaseFirestore db;
     RecyclerView recyclerView;
     private SearchView searchView;
-    ArrayList<Product> products = new ArrayList<>();
     static Button getOrder;
 
     public ShopFragment(){super(R.layout.shop_fragment);}
@@ -51,7 +50,10 @@ public class ShopFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.items);
         getOrder = view.findViewById(R.id.getOrder_Btn);
 
-        updateDB();
+        ProductAdapter adapter = new ProductAdapter(getContext(), MainActivity.products);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
 
         getOrder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,7 +109,9 @@ public class ShopFragment extends Fragment {
                                             }
                                         });
                                 CurrentUser.order.clear();
-                                updateDB();
+                                ProductAdapter adapter = new ProductAdapter(getContext(), MainActivity.products);
+                                recyclerView.setAdapter(adapter);
+                                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                             }
                         })
                         .setNegativeButton("Отмена", null);
@@ -132,39 +136,10 @@ public class ShopFragment extends Fragment {
         });
     }
 
-    public void updateDB(){
-
-        db.collection("Products")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Product product = new Product();
-                                String id = document.getId().toString();
-                                product.setIdProduct(id);
-                                for(Map.Entry<String,Object> docs : document.getData().entrySet()){
-                                    if (docs.getKey().equals("Name")) product.setNameProduct(docs.getValue().toString());
-                                    if (docs.getKey().equals("Price")) product.setPriceProduct(Double.parseDouble(docs.getValue().toString()));
-                                    if (docs.getKey().equals("Amount")) product.setAmountProduct(Integer.parseInt(docs.getValue().toString()));
-                                    if (docs.getKey().equals("Sale")) product.setSaleProduct(Integer.parseInt(docs.getValue().toString()));
-                                    if (docs.getKey().equals("Photo")) product.setImgProduct(docs.getValue().toString());
-                                    if (docs.getKey().equals("Description")) product.setDescriptionProduct(docs.getValue().toString());
-                                }
-                                products.add(product);
-                            }
-                            ProductAdapter adapter = new ProductAdapter(getContext(), products);
-                            recyclerView.setAdapter(adapter);
-                            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                        }
-                    }
-                });
-    }
 
     private void filterList(String text) {
         List<Product> filteredList = new ArrayList<>();
-        for (Product product : products){
+        for (Product product : MainActivity.products){
             if (text.toLowerCase().isEmpty()){
                 filteredList.clear();
             }
@@ -179,7 +154,7 @@ public class ShopFragment extends Fragment {
                 Toast.makeText(getContext(), "Товара с таким названием нет",
                         Toast.LENGTH_SHORT).show();
             }
-            ProductAdapter adapter = new ProductAdapter(getContext(), products);
+            ProductAdapter adapter = new ProductAdapter(getContext(), MainActivity.products);
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         }else {
