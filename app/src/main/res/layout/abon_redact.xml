@@ -64,7 +64,7 @@
             style="@style/Widget.MaterialComponents.Button"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:text="изменить товар"
+            android:text="изменить"
             android:backgroundTint="@color/purple"
             android:textColor="@color/white"
             android:textSize="12dp"

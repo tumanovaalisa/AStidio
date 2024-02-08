@@ -54,11 +54,15 @@ public class AbonAdapter  extends RecyclerView.Adapter<AbonAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull AbonAdapter.ViewHolder holder, int position) {
         Abon abon = mAbons.get(position);
         TextView textView1 = holder.nameTextView;
-        textView1.setText(abon.getName() + abon.getLastname());
+        textView1.setText(abon.getName() + " " + abon.getLastname());
         TextView textView2 = holder.mailTextView;
         textView2.setText(abon.getEmail());
         TextView textView3 = holder.dateTextView;
-        textView3.setText(abon.getDate());
+        if (!abon.getDate().equals("")){
+            textView3.setText("Истекает:    " + abon.getDate());
+        } else {
+            textView3.setText("Абонемент еще не оформлен");
+        }
 
         holder.button.setOnClickListener(new View.OnClickListener() {
             @Override

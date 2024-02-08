@@ -62,8 +62,10 @@ public class AbonsFragment extends Fragment {
                                     if (docs.getKey().equals("Lastname")) abon.setLastname(docs.getValue().toString());
                                     if (docs.getKey().equals("Date")) abon.setDate(docs.getValue().toString());
                                 }
-                                abons.add(abon);
-                            }
+                                if (!abon.getEmail().equals("admin@mail.ru")){
+                                    abons.add(abon);
+                                }
+                                                            }
                             AbonAdapter adapter = new AbonAdapter(getContext(), abons);
                             recyclerView.setAdapter(adapter);
                             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

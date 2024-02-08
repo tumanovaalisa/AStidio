@@ -1,5 +1,6 @@
 package com.example.astidio;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import androidx.annotation.NonNull;
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     };
 
     private void loadFragment(Fragment fragment) {
+        Intent intent = new Intent(this, AdminActivity.class);
         if (CurrentUser.name.equals("")){
             FirebaseUser currentUser = mAuth.getCurrentUser();
             CurrentUser.email = currentUser.getEmail().toString();
@@ -66,9 +68,13 @@ public class MainActivity extends AppCompatActivity {
                                         if (docs.getKey().equals("Name")) CurrentUser.name = docs.getValue().toString();
                                     }
                                 }
-                                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                                ft.replace(R.id.fl_content, fragment);
-                                ft.commit();
+                                if (CurrentUser.name.equals("admin")){
+                                    startActivity(intent);
+                                }else{
+                                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                                    ft.replace(R.id.fl_content, fragment);
+                                    ft.commit();
+                                }
                             }
                         }
                     });
