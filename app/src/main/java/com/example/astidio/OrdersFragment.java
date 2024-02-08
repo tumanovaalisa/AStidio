@@ -93,7 +93,7 @@ public class OrdersFragment  extends Fragment {
                                                 }
                                             }
                                             history.setEmail(user.get(3));
-                                            history.setName(user.get(5));
+                                            history.setName(user.get(6));
                                             history.setLastname(user.get(4));
                                             histories.add(history);
                                         }
