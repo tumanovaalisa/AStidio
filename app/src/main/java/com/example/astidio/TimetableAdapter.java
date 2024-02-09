@@ -63,6 +63,10 @@ public class TimetableAdapter extends RecyclerView.Adapter<TimetableAdapter.Time
             holder.enrolButton.setEnabled(false);
             holder.enrolButton.setText("мест нет");
             holder.enrolButton.setTextSize(10);
+        }  else {
+            holder.enrolButton.setEnabled(true);
+            holder.enrolButton.setText("иду!");
+            holder.enrolButton.setTextSize(12);
         }
         holder.enrolButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -289,19 +289,15 @@ public class TimetableFragment extends Fragment implements CalendarAdapter.onIte
                 });
     }
     private void fetchDataFromFirestore1(String date2) {
-        Date currentDate = new Date();
-        // Форматирование даты
-        //SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        timetableList.clear();
         db.collection("Timetable")
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         timetableList.clear();
+                        int i = 0;
                         for (QueryDocumentSnapshot document : task.getResult()) {
-                            // Извлечение данных из коллекции Timetable
-                            //try {
                                 String date = document.getString("date");
-                                //Date date1 = sdf.parse(date);
                                 // Проверка, является ли дата сегодняшней
                                 if (date.equals(date2)) {
                                     String name = document.getString("name");
@@ -309,15 +305,12 @@ public class TimetableFragment extends Fragment implements CalendarAdapter.onIte
                                     String timeStart = document.getString("timeStart");
                                     String teacherId = document.getString("teacherId");
                                     Long amount = document.getLong("amount");
+                                    i = 1;
 
                                     // Получение дополнительных данных из коллекции Teachers с использованием teacherId
                                     fetchTeacherDetails(teacherId, document.getId(), date, name, timeEnd, timeStart, Integer.parseInt(String.valueOf(amount)));
                                 }
-                            /*} catch (ParseException e) {
-                                // Обработка исключения, например, вывод сообщения об ошибке
-                                System.err.println("Ошибка при обработке даты");
-                                e.printStackTrace();
-                            }*/
+                                if(i==0) timetableAdapter.notifyDataSetChanged();
                         }
                     }
                 });
@@ -358,15 +351,7 @@ public class TimetableFragment extends Fragment implements CalendarAdapter.onIte
     public void onItemClick(CalendarDateModel model, int position) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
         String selectedDate = sdf.format(model.getData());
-        /*// Фильтруем список занятий по выбранной дате
-        List<Timetable> filteredTimetableList = new ArrayList<>();
-        for (Timetable timetable : timetableList) {
-            if (timetable.getDate().equals(selectedDate)) {
-                filteredTimetableList.add(timetable);
-            }
-        }*/
         fetchDataFromFirestore1(selectedDate);
-        //timetableAdapter.setData(filteredTimetableList);
     }
 
 
