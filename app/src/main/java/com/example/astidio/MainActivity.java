@@ -1,5 +1,6 @@
 package com.example.astidio;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -19,6 +20,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import org.osmdroid.config.Configuration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -129,5 +132,6 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navigationView = findViewById(R.id.navigation);
         navigationView.setOnItemSelectedListener(mOnItemSelectedListener);
         loadFragment(MainFragment.newInstance());
+        Configuration.getInstance().load(this, getPreferences(Context.MODE_PRIVATE));
     }
 }
